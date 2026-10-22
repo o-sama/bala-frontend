@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-canvas: var(--canvas);
+  --color-warm-white: var(--warm-white);
+  --color-alert: var(--alert);
+  --color-nut-panel: var(--nut-panel);
+  --color-nut-icon: var(--nut-icon);
+  --color-nut-ink: var(--nut-ink);
+  --color-peanut-panel: var(--peanut-panel);
+  --color-peanut-icon: var(--peanut-icon);
+  --color-peanut-ink: var(--peanut-ink);
+  --color-selected: var(--selected);
+  --color-sensitivity-panel: var(--sensitivity-panel);
+  --color-sensitivity-border: var(--sensitivity-border);
+  --color-sensitivity-ink: var(--sensitivity-ink);
+}
+
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --background: #ffffff;
+  --foreground: #173f37;
+  --card: #ffffff;
+  --card-foreground: #173f37;
+  --primary: #17483e;
+  --primary-foreground: #ffffff;
+  --secondary-foreground: #425f56;
+  --muted: #edf2ed;
+  --muted-foreground: #60766d;
+  --border: #d9e1db;
+  --ring: #557f70;
+  --canvas: #edf0e8;
+  --warm-white: #fffcf7;
+  --alert: #9b3f31;
+  --nut-panel: #fff0e9;
+  --nut-icon: #f6ede3;
+  --nut-ink: #77362c;
+  --peanut-panel: #f1f6e9;
+  --peanut-icon: #edf2e5;
+  --peanut-ink: #4f6c2d;
+  --selected: #eaf2ed;
+  --sensitivity-panel: #fff7dc;
+  --sensitivity-border: #e7c96b;
+  --sensitivity-ink: #665014;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100svh;
+  background: var(--canvas);
+  color: var(--foreground);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+[role="button"],
+label[for] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.phone-panel {
+  width: min(100%, 390px);
+  min-height: calc(100svh - 2.5rem);
+  margin-inline: auto;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.75rem;
+  background: var(--background);
+  box-shadow: 0 18px 55px rgb(23 63 55 / 0.08);
+}
+
+.eyebrow {
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 420px) {
+  .phone-panel {
+    min-height: calc(100svh - 1rem);
+    padding: 1.25rem;
+    border-radius: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

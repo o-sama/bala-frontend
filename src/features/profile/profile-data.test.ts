@@ -1,0 +1,50 @@
+import { describe, expect, it } from "vitest"
+
+import { getProfileById, getSelectedSensitivities, groupSelectedFoods } from "@/features/profile/profile-data"
+import { detectLanguage } from "@/features/profile/translations"
+
+describe("groupSelectedFoods", () => {
+  it("keeps exact foods separated into their allergen families", () => {
+    const groups = groupSelectedFoods(["walnut", "peanut"])
+
+    expect(groups).toEqual([
+      { familyId: "tree-nuts", foods: [{ id: "walnut", familyId: "tree-nuts" }] },
+      { familyId: "legumes", foods: [{ id: "peanut", familyId: "legumes" }] },
+    ])
+  })
+
+  it("does not create empty public sections", () => {
+    expect(groupSelectedFoods(["cashew"])).toHaveLength(1)
+  })
+})
+
+describe("detectLanguage", () => {
+  it("uses French when any preferred browser language is French", () => {
+    expect(detectLanguage(["en-CA", "fr-CA"])).toBe("fr")
+  })
+
+  it("falls back to English for unsupported languages", () => {
+    expect(detectLanguage(["de-DE"])).toBe("en")
+  })
+})
+
+describe("getSelectedSensitivities", () => {
+  it("returns only the sensitivities configured on the profile", () => {
+    expect(getSelectedSensitivities(["lactose"])).toEqual([{ id: "lactose" }])
+  })
+
+  it("returns an empty list when the profile has no sensitivities", () => {
+    expect(getSelectedSensitivities([])).toEqual([])
+  })
+})
+
+describe("getProfileById", () => {
+  it("returns Talia's exact tree nut allergies without adding sensitivities", () => {
+    expect(getProfileById("talia")).toMatchObject({
+      firstName: "Talia",
+      fullName: "Talia",
+      selectedFoodIds: ["walnut", "almond", "pecan", "brazil-nut", "macadamia-nut"],
+      sensitivityIds: [],
+    })
+  })
+})
