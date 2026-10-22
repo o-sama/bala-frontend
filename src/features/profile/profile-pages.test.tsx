@@ -71,4 +71,19 @@ describe("profile priorities", () => {
     expect(screen.getByRole("heading", { name: "Sensitivities — avoid if possible" })).toBeInTheDocument()
     expect(screen.getByText("Avoid ingredients and cross-contact")).toBeInTheDocument()
   })
+
+  it("renders Arabic staff copy with right-to-left direction", () => {
+    render(
+      <StaffViewPage
+        profile={taliaProfile}
+        language="ar"
+        onLanguageChange={handlers.onLanguageChange}
+        onBack={handlers.onBack}
+      />,
+    )
+
+    expect(screen.getByRole("main")).toHaveAttribute("dir", "rtl")
+    expect(screen.getByRole("heading", { name: "الحساسية — تجنّب تام" })).toBeInTheDocument()
+    expect(screen.getByText("الجوز")).toBeInTheDocument()
+  })
 })

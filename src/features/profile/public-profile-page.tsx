@@ -18,12 +18,12 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
   const copy = translations[language]
   const groups = groupSelectedFoods(profile.selectedFoodIds)
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
-  const date = new Intl.DateTimeFormat(language === "fr" ? "fr-CA" : "en-CA", { dateStyle: "medium" }).format(
+  const date = new Intl.DateTimeFormat(copy.locale, { dateStyle: "medium" }).format(
     new Date(`${profile.updatedAt}T12:00:00`),
   )
 
   return (
-    <main className="phone-panel space-y-6" aria-labelledby="profile-heading">
+    <main className="phone-panel space-y-6" dir={copy.direction} aria-labelledby="profile-heading">
       <AppHeader language={language} onLanguageChange={onLanguageChange} homeHref={`#/p/${profile.id}`} />
 
       <section className="flex items-center gap-3" aria-label="Profile owner">

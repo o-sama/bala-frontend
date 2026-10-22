@@ -23,6 +23,18 @@ describe("detectLanguage", () => {
     expect(detectLanguage(["en-CA", "fr-CA"])).toBe("fr")
   })
 
+  it.each([
+    ["es-MX", "es"],
+    ["ar-SA", "ar"],
+    ["tr-TR", "tr"],
+  ] as const)("maps %s to %s", (browserLanguage, expectedLanguage) => {
+    expect(detectLanguage([browserLanguage])).toBe(expectedLanguage)
+  })
+
+  it("uses the first supported non-English language", () => {
+    expect(detectLanguage(["ar-SA", "tr-TR"])).toBe("ar")
+  })
+
   it("falls back to English for unsupported languages", () => {
     expect(detectLanguage(["de-DE"])).toBe("en")
   })

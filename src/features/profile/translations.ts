@@ -1,9 +1,13 @@
 import type { AllergenFamilyId, FoodId, SensitivityId } from "@/features/profile/profile-data"
 
-export type SupportedLanguage = "en" | "fr"
+export const supportedLanguages = ["en", "fr", "es", "ar", "tr"] as const
+
+export type SupportedLanguage = (typeof supportedLanguages)[number]
 
 interface Copy {
   languageName: string
+  locale: string
+  direction: "ltr" | "rtl"
   allergyProfile: string
   shareWithKitchen: string
   foodAllergies: string
@@ -34,6 +38,8 @@ interface Copy {
 export const translations: Record<SupportedLanguage, Copy> = {
   en: {
     languageName: "English",
+    locale: "en-CA",
+    direction: "ltr",
     allergyProfile: "Food allergy profile",
     shareWithKitchen: "Share with your kitchen",
     foodAllergies: "Food allergies",
@@ -72,6 +78,8 @@ export const translations: Record<SupportedLanguage, Copy> = {
   },
   fr: {
     languageName: "Français",
+    locale: "fr-CA",
+    direction: "ltr",
     allergyProfile: "Profil d’allergies alimentaires",
     shareWithKitchen: "À partager avec la cuisine",
     foodAllergies: "Allergies alimentaires",
@@ -108,8 +116,137 @@ export const translations: Record<SupportedLanguage, Copy> = {
     },
     sensitivities: { lactose: "Lactose" },
   },
+  es: {
+    languageName: "Español",
+    locale: "es",
+    direction: "ltr",
+    allergyProfile: "Perfil de alergias alimentarias",
+    shareWithKitchen: "Compartir con la cocina",
+    foodAllergies: "Alergias alimentarias",
+    profileHeading: "Por favor, revise mis alergias alimentarias.",
+    profileIntro: "Revise estos ingredientes específicos antes de preparar o servir mi comida.",
+    showToStaff: "Mostrar al personal",
+    preparationHeading: "Al preparar mi comida",
+    avoidCrossContact: "Evite estos ingredientes y el contacto cruzado con ellos.",
+    cannotAccommodate: "Dígame si mi comida no puede prepararse de acuerdo con estas necesidades.",
+    unlistedNotice: "Los alimentos que no aparecen aquí no se han marcado como seguros.",
+    profileOwner: "Titular del perfil",
+    updated: "Actualizado",
+    staffEyebrow: "Muestre esto a la cocina",
+    staffHeading: "Soy alérgico a estos alimentos.",
+    back: "Volver",
+    thankYou: "Gracias por comprobarlo.",
+    staffAllergiesHeading: "Alergias — evitación estricta",
+    staffAvoidanceInstruction: "Evite los ingredientes y el contacto cruzado",
+    sensitivitiesHeading: "Sensibilidades (no son alergias)",
+    sensitivitiesStaffHeading: "Sensibilidades — evitar si es posible",
+    avoidIfPossible: "Evitar si es posible",
+    sensitivityExplanation: "Son preferencias para mayor comodidad y no son alergias alimentarias.",
+    families: { "tree-nuts": "Alergias a frutos de cáscara", legumes: "Alergia al cacahuete" },
+    foods: {
+      walnut: "Nueces",
+      cashew: "Anacardos",
+      pistachio: "Pistachos",
+      almond: "Almendras",
+      hazelnut: "Avellanas",
+      pecan: "Nueces pecanas",
+      "brazil-nut": "Nueces de Brasil",
+      "macadamia-nut": "Nueces de macadamia",
+      peanut: "Cacahuetes",
+    },
+    sensitivities: { lactose: "Lactosa" },
+  },
+  ar: {
+    languageName: "العربية",
+    locale: "ar",
+    direction: "rtl",
+    allergyProfile: "ملف حساسية الطعام",
+    shareWithKitchen: "اعرضه على المطبخ",
+    foodAllergies: "حساسيات الطعام",
+    profileHeading: "يرجى التحقق من حساسياتي الغذائية.",
+    profileIntro: "يرجى التحقق من هذه المكونات المحددة قبل تحضير طعامي أو تقديمه.",
+    showToStaff: "اعرض على الطاقم",
+    preparationHeading: "عند تحضير طعامي",
+    avoidCrossContact: "يرجى تجنّب هذه المكونات ومنع التلامس العرضي معها.",
+    cannotAccommodate: "أخبرني إذا تعذّر تحضير وجبتي وفق هذه الاحتياجات.",
+    unlistedNotice: "الأطعمة غير المذكورة هنا لم تُحدَّد على أنها آمنة.",
+    profileOwner: "صاحب الملف",
+    updated: "آخر تحديث",
+    staffEyebrow: "يرجى عرضه على المطبخ",
+    staffHeading: "لدي حساسية تجاه هذه الأطعمة.",
+    back: "رجوع",
+    thankYou: "شكرًا لتحققكم.",
+    staffAllergiesHeading: "الحساسية — تجنّب تام",
+    staffAvoidanceInstruction: "تجنّب المكونات والتلامس العرضي",
+    sensitivitiesHeading: "أطعمة تسبب انزعاجًا (ليست حساسية)",
+    sensitivitiesStaffHeading: "أطعمة تسبب انزعاجًا — تجنّبها إن أمكن",
+    avoidIfPossible: "تجنّبها إن أمكن",
+    sensitivityExplanation: "قد تسبب هذه الأطعمة انزعاجًا، لكنها ليست حساسية غذائية.",
+    families: { "tree-nuts": "حساسية المكسرات الشجرية", legumes: "حساسية الفول السوداني" },
+    foods: {
+      walnut: "الجوز",
+      cashew: "الكاجو",
+      pistachio: "الفستق",
+      almond: "اللوز",
+      hazelnut: "البندق",
+      pecan: "جوز البقان",
+      "brazil-nut": "الجوز البرازيلي",
+      "macadamia-nut": "جوز المكاديميا",
+      peanut: "الفول السوداني",
+    },
+    sensitivities: { lactose: "اللاكتوز" },
+  },
+  tr: {
+    languageName: "Türkçe",
+    locale: "tr-TR",
+    direction: "ltr",
+    allergyProfile: "Gıda alerjisi profili",
+    shareWithKitchen: "Mutfakla paylaşın",
+    foodAllergies: "Gıda alerjileri",
+    profileHeading: "Lütfen gıda alerjilerimi kontrol edin.",
+    profileIntro: "Yemeğimi hazırlamadan veya servis etmeden önce lütfen bu belirli malzemeleri kontrol edin.",
+    showToStaff: "Personele göster",
+    preparationHeading: "Yemeğimi hazırlarken",
+    avoidCrossContact: "Lütfen bu malzemelerden ve bunlarla çapraz temastan kaçının.",
+    cannotAccommodate: "Yemeğim bu ihtiyaçlara uygun olarak hazırlanamayacaksa lütfen bana söyleyin.",
+    unlistedNotice: "Burada listelenmeyen yiyecekler güvenli olarak işaretlenmemiştir.",
+    profileOwner: "Profil sahibi",
+    updated: "Güncellendi",
+    staffEyebrow: "Lütfen mutfağa gösterin",
+    staffHeading: "Bu yiyeceklere alerjim var.",
+    back: "Geri",
+    thankYou: "Kontrol ettiğiniz için teşekkür ederim.",
+    staffAllergiesHeading: "Alerjiler — kesinlikle kaçının",
+    staffAvoidanceInstruction: "Malzemelerden ve çapraz temastan kaçının",
+    sensitivitiesHeading: "Hassasiyetler (alerji değildir)",
+    sensitivitiesStaffHeading: "Hassasiyetler — mümkünse kaçının",
+    avoidIfPossible: "Mümkünse kaçının",
+    sensitivityExplanation: "Bunlar rahatlık amaçlı tercihlerdir ve gıda alerjisi değildir.",
+    families: { "tree-nuts": "Ağaç yemişi alerjileri", legumes: "Yer fıstığı alerjisi" },
+    foods: {
+      walnut: "Ceviz",
+      cashew: "Kaju",
+      pistachio: "Antep fıstığı",
+      almond: "Badem",
+      hazelnut: "Fındık",
+      pecan: "Pekan cevizi",
+      "brazil-nut": "Brezilya cevizi",
+      "macadamia-nut": "Makademya cevizi",
+      peanut: "Yer fıstığı",
+    },
+    sensitivities: { lactose: "Laktoz" },
+  },
 }
 
 export function detectLanguage(languages: readonly string[] = navigator.languages): SupportedLanguage {
-  return languages.some((language) => language.toLowerCase().startsWith("fr")) ? "fr" : "en"
+  for (const browserLanguage of languages) {
+    const languageCode = browserLanguage.toLowerCase().split("-")[0]
+    const supportedLanguage = supportedLanguages.find(
+      (language): language is Exclude<SupportedLanguage, "en"> => language !== "en" && language === languageCode,
+    )
+
+    if (supportedLanguage) return supportedLanguage
+  }
+
+  return "en"
 }

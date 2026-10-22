@@ -1,7 +1,7 @@
 import { Globe2 } from "lucide-react"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { translations, type SupportedLanguage } from "@/features/profile/translations"
+import { supportedLanguages, translations, type SupportedLanguage } from "@/features/profile/translations"
 
 interface LanguageSelectProps {
   value: SupportedLanguage
@@ -16,8 +16,9 @@ export function LanguageSelect({ value, onChange }: LanguageSelectProps) {
         <SelectValue />
       </SelectTrigger>
       <SelectContent align="end">
-        <SelectItem value="en">{translations.en.languageName}</SelectItem>
-        <SelectItem value="fr">{translations.fr.languageName}</SelectItem>
+        {supportedLanguages.map((language) => (
+          <SelectItem key={language} value={language}>{translations[language].languageName}</SelectItem>
+        ))}
       </SelectContent>
     </Select>
   )

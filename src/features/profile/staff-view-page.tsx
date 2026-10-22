@@ -21,10 +21,10 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
 
   return (
-    <main className="phone-panel bg-warm-white space-y-6" aria-labelledby="staff-heading">
+    <main className="phone-panel bg-warm-white space-y-6" dir={copy.direction} aria-labelledby="staff-heading">
       <header className="flex items-center justify-between">
-        <Button variant="ghost" className="-ml-3" onClick={onBack}>
-          <ArrowLeft className="size-4" />
+        <Button variant="ghost" className="-ms-3" onClick={onBack}>
+          <ArrowLeft className="size-4 rtl:rotate-180" />
           {copy.back}
         </Button>
         <LanguageSelect value={language} onChange={onLanguageChange} />

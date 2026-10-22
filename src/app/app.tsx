@@ -5,7 +5,7 @@ import { OwnerProfilePage } from "@/features/profile/owner-profile-page"
 import { demoProfile, getProfileById, type FoodId } from "@/features/profile/profile-data"
 import { PublicProfilePage } from "@/features/profile/public-profile-page"
 import { StaffViewPage } from "@/features/profile/staff-view-page"
-import { detectLanguage, type SupportedLanguage } from "@/features/profile/translations"
+import { detectLanguage, translations, type SupportedLanguage } from "@/features/profile/translations"
 import { useHashRoute } from "@/app/use-hash-route"
 
 export function App() {
@@ -18,6 +18,7 @@ export function App() {
 
   useEffect(() => {
     document.documentElement.lang = language
+    document.documentElement.dir = translations[language].direction
   }, [language])
 
   return (
