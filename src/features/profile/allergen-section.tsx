@@ -16,10 +16,10 @@ interface AllergenSectionProps {
 
 export function AllergenSection({ familyId, foods, language, emphasized }: AllergenSectionProps) {
   const copy = translations[language]
-  const isPeanut = familyId === "legumes"
+  const isLegume = familyId === "legumes"
 
   return (
-    <Card className={cn("bg-nut-panel text-nut-ink", isPeanut && "bg-peanut-panel text-peanut-ink")}>
+    <Card className={cn("bg-nut-panel text-nut-ink", isLegume && "bg-peanut-panel text-peanut-ink")}>
       <CardHeader className={cn("px-5 pt-5", emphasized && "px-6 pt-6")}>
         <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.1em]">
           <AlertTriangle className="size-4" />

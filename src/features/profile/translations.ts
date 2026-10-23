@@ -15,7 +15,6 @@ interface Copy {
   locale: string
   direction: "ltr" | "rtl"
   allergyProfile: string
-  shareWithKitchen: string
   foodAllergies: string
   profileHeading: string
   profileIntro: string
@@ -24,8 +23,7 @@ interface Copy {
   avoidCrossContact: string
   cannotAccommodate: string
   unlistedNotice: string
-  profileOwner: string
-  updated: string
+  lastUpdated: string
   staffEyebrow: string
   staffHeading: string
   back: string
@@ -57,7 +55,6 @@ export const translations: Record<SupportedLanguage, Copy> = {
     locale: "en-CA",
     direction: "ltr",
     allergyProfile: "Allergy profile",
-    shareWithKitchen: "Share with your kitchen",
     foodAllergies: "Food allergies",
     profileHeading: "Please check my food allergies.",
     profileIntro: "Please check these specific ingredients before preparing or serving my food.",
@@ -66,8 +63,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     avoidCrossContact: "Please avoid these ingredients and cross-contact with them.",
     cannotAccommodate: "Tell me if my meal cannot be prepared to meet these needs.",
     unlistedNotice: "Foods not listed here have not been marked as safe.",
-    profileOwner: "Profile owner",
-    updated: "Updated",
+    lastUpdated: "Last updated",
     staffEyebrow: "Please show the kitchen",
     staffHeading: "I am allergic to these foods.",
     back: "Back",
@@ -86,7 +82,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     celiacStaffHeading: "Celiac disease — strict gluten-free",
     celiacExplanation: "This is an autoimmune condition, not a food allergy or sensitivity.",
     celiacAvoidanceInstruction: "Avoid wheat, barley, rye, and cross-contact with gluten.",
-    families: { "tree-nuts": "Tree nut allergies", legumes: "Peanut allergy" },
+    families: { "tree-nuts": "Tree nut allergies", legumes: "Legume allergies" },
     foods: {
       walnut: "Walnuts",
       cashew: "Cashews",
@@ -97,6 +93,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       "brazil-nut": "Brazil nuts",
       "macadamia-nut": "Macadamia nuts",
       peanut: "Peanuts",
+      soy: "Soy",
     },
     sensitivities: { lactose: "Lactose" },
     medicines: { penicillin: "Penicillin" },
@@ -107,7 +104,6 @@ export const translations: Record<SupportedLanguage, Copy> = {
     locale: "fr-CA",
     direction: "ltr",
     allergyProfile: "Profil d’allergies",
-    shareWithKitchen: "À partager avec la cuisine",
     foodAllergies: "Allergies alimentaires",
     profileHeading: "Veuillez vérifier mes allergies alimentaires.",
     profileIntro: "Veuillez vérifier ces ingrédients précis avant de préparer ou de servir mon repas.",
@@ -116,8 +112,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     avoidCrossContact: "Veuillez éviter ces ingrédients et tout contact croisé avec ceux-ci.",
     cannotAccommodate: "Dites-moi si mon repas ne peut pas être préparé selon ces besoins.",
     unlistedNotice: "Les aliments absents de cette liste ne sont pas indiqués comme sûrs.",
-    profileOwner: "Titulaire du profil",
-    updated: "Mis à jour",
+    lastUpdated: "Dernière mise à jour",
     staffEyebrow: "Veuillez montrer à la cuisine",
     staffHeading: "Je suis allergique à ces aliments.",
     back: "Retour",
@@ -136,7 +131,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     celiacStaffHeading: "Maladie cœliaque — sans gluten strict",
     celiacExplanation: "Il s’agit d’une maladie auto-immune, et non d’une allergie ou sensibilité alimentaire.",
     celiacAvoidanceInstruction: "Éviter le blé, l’orge, le seigle et tout contact croisé avec le gluten.",
-    families: { "tree-nuts": "Allergies aux noix", legumes: "Allergie aux arachides" },
+    families: { "tree-nuts": "Allergies aux noix", legumes: "Allergies aux légumineuses" },
     foods: {
       walnut: "Noix de Grenoble",
       cashew: "Noix de cajou",
@@ -147,6 +142,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       "brazil-nut": "Noix du Brésil",
       "macadamia-nut": "Noix de macadamia",
       peanut: "Arachides",
+      soy: "Soja",
     },
     sensitivities: { lactose: "Lactose" },
     medicines: { penicillin: "Pénicilline" },
@@ -157,7 +153,6 @@ export const translations: Record<SupportedLanguage, Copy> = {
     locale: "es",
     direction: "ltr",
     allergyProfile: "Perfil de alergias",
-    shareWithKitchen: "Compartir con la cocina",
     foodAllergies: "Alergias alimentarias",
     profileHeading: "Por favor, revise mis alergias alimentarias.",
     profileIntro: "Revise estos ingredientes específicos antes de preparar o servir mi comida.",
@@ -166,8 +161,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     avoidCrossContact: "Evite estos ingredientes y el contacto cruzado con ellos.",
     cannotAccommodate: "Dígame si mi comida no puede prepararse de acuerdo con estas necesidades.",
     unlistedNotice: "Los alimentos que no aparecen aquí no se han marcado como seguros.",
-    profileOwner: "Titular del perfil",
-    updated: "Actualizado",
+    lastUpdated: "Última actualización",
     staffEyebrow: "Muestre esto a la cocina",
     staffHeading: "Soy alérgico a estos alimentos.",
     back: "Volver",
@@ -186,7 +180,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     celiacStaffHeading: "Enfermedad celíaca — sin gluten estricto",
     celiacExplanation: "Es una enfermedad autoinmune, no una alergia ni sensibilidad alimentaria.",
     celiacAvoidanceInstruction: "Evite el trigo, la cebada, el centeno y el contacto cruzado con gluten.",
-    families: { "tree-nuts": "Alergias a frutos de cáscara", legumes: "Alergia al cacahuete" },
+    families: { "tree-nuts": "Alergias a frutos de cáscara", legumes: "Alergias a las legumbres" },
     foods: {
       walnut: "Nueces",
       cashew: "Anacardos",
@@ -197,6 +191,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       "brazil-nut": "Nueces de Brasil",
       "macadamia-nut": "Nueces de macadamia",
       peanut: "Cacahuetes",
+      soy: "Soja",
     },
     sensitivities: { lactose: "Lactosa" },
     medicines: { penicillin: "Penicilina" },
@@ -207,7 +202,6 @@ export const translations: Record<SupportedLanguage, Copy> = {
     locale: "ar",
     direction: "rtl",
     allergyProfile: "ملف الحساسية",
-    shareWithKitchen: "اعرضه على المطبخ",
     foodAllergies: "حساسيات الطعام",
     profileHeading: "يرجى التحقق من حساسياتي الغذائية.",
     profileIntro: "يرجى التحقق من هذه المكونات المحددة قبل تحضير طعامي أو تقديمه.",
@@ -216,8 +210,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     avoidCrossContact: "يرجى تجنّب هذه المكونات ومنع التلامس العرضي معها.",
     cannotAccommodate: "أخبرني إذا تعذّر تحضير وجبتي وفق هذه الاحتياجات.",
     unlistedNotice: "الأطعمة غير المذكورة هنا لم تُحدَّد على أنها آمنة.",
-    profileOwner: "صاحب الملف",
-    updated: "آخر تحديث",
+    lastUpdated: "آخر تحديث",
     staffEyebrow: "يرجى عرضه على المطبخ",
     staffHeading: "لدي حساسية تجاه هذه الأطعمة.",
     back: "رجوع",
@@ -236,7 +229,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     celiacStaffHeading: "الداء البطني — خالٍ تمامًا من الغلوتين",
     celiacExplanation: "هذه حالة مناعية ذاتية وليست حساسية أو تحسسًا غذائيًا.",
     celiacAvoidanceInstruction: "تجنّب القمح والشعير والجاودار وأي تلامس عرضي مع الغلوتين.",
-    families: { "tree-nuts": "حساسية المكسرات الشجرية", legumes: "حساسية الفول السوداني" },
+    families: { "tree-nuts": "حساسية المكسرات الشجرية", legumes: "حساسية البقوليات" },
     foods: {
       walnut: "الجوز",
       cashew: "الكاجو",
@@ -247,6 +240,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       "brazil-nut": "الجوز البرازيلي",
       "macadamia-nut": "جوز المكاديميا",
       peanut: "الفول السوداني",
+      soy: "فول الصويا",
     },
     sensitivities: { lactose: "اللاكتوز" },
     medicines: { penicillin: "البنسلين" },
@@ -257,7 +251,6 @@ export const translations: Record<SupportedLanguage, Copy> = {
     locale: "tr-TR",
     direction: "ltr",
     allergyProfile: "Alerji profili",
-    shareWithKitchen: "Mutfakla paylaşın",
     foodAllergies: "Gıda alerjileri",
     profileHeading: "Lütfen gıda alerjilerimi kontrol edin.",
     profileIntro: "Yemeğimi hazırlamadan veya servis etmeden önce lütfen bu belirli malzemeleri kontrol edin.",
@@ -266,8 +259,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     avoidCrossContact: "Lütfen bu malzemelerden ve bunlarla çapraz temastan kaçının.",
     cannotAccommodate: "Yemeğim bu ihtiyaçlara uygun olarak hazırlanamayacaksa lütfen bana söyleyin.",
     unlistedNotice: "Burada listelenmeyen yiyecekler güvenli olarak işaretlenmemiştir.",
-    profileOwner: "Profil sahibi",
-    updated: "Güncellendi",
+    lastUpdated: "Son güncelleme",
     staffEyebrow: "Lütfen mutfağa gösterin",
     staffHeading: "Bu yiyeceklere alerjim var.",
     back: "Geri",
@@ -286,7 +278,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     celiacStaffHeading: "Çölyak hastalığı — kesinlikle glütensiz",
     celiacExplanation: "Bu, gıda alerjisi veya hassasiyeti değil, otoimmün bir hastalıktır.",
     celiacAvoidanceInstruction: "Buğday, arpa, çavdar ve glütenle çapraz temastan kaçının.",
-    families: { "tree-nuts": "Ağaç yemişi alerjileri", legumes: "Yer fıstığı alerjisi" },
+    families: { "tree-nuts": "Ağaç yemişi alerjileri", legumes: "Baklagil alerjileri" },
     foods: {
       walnut: "Ceviz",
       cashew: "Kaju",
@@ -297,6 +289,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       "brazil-nut": "Brezilya cevizi",
       "macadamia-nut": "Makademya cevizi",
       peanut: "Yer fıstığı",
+      soy: "Soya",
     },
     sensitivities: { lactose: "Laktoz" },
     medicines: { penicillin: "Penisilin" },

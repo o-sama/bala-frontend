@@ -87,7 +87,7 @@ describe("getProfileById", () => {
 
   it("keeps at least one example from every supported category on Alex's demo", () => {
     expect(getProfileById("alex-demo")).toMatchObject({
-      selectedFoodIds: expect.arrayContaining(["walnut", "peanut"]),
+      selectedFoodIds: expect.arrayContaining(["walnut", "peanut", "soy"]),
       sensitivityIds: ["lactose"],
       medicineAllergyIds: ["penicillin"],
       dietaryConditionIds: ["celiac"],

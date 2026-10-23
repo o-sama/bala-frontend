@@ -11,6 +11,7 @@ const paths: Record<FoodId, string> = {
   "brazil-nut": "M8 25 5 14 13 5l12 5 2 12-10 7-9-4ZM13 5l4 24M6 14l20 8M10 11l12 14",
   "macadamia-nut": "M16 4c8 0 13 5 13 12s-5 12-13 12S3 23 3 16 8 4 16 4Zm0 4c-5 0-9 3-9 8s4 8 9 8 9-3 9-8-4-8-9-8Zm-4 3c3-2 7-1 9 2 2 4 0 7-4 8",
   peanut: "M12 4c-5 0-7 4-6 8 1 3 4 4 3 7-1 4 1 9 6 9s8-4 7-8c-1-3-4-4-3-7 1-4-2-9-7-9ZM10 7c4 3 5 6 2 9-2 3 0 7 4 10M16 7c-3 3-4 6-1 9 3 3 3 6 1 10M8 12l10 1M10 20h11",
+  soy: "M7 24C4 18 7 9 15 5c7-3 12 1 10 8-2 8-10 14-18 11ZM9 21c5-1 10-5 13-11M11 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm7 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z",
 }
 
 interface FoodIconProps {
@@ -19,14 +20,14 @@ interface FoodIconProps {
 }
 
 export function FoodIcon({ foodId, className }: FoodIconProps) {
-  const isPeanut = foodId === "peanut"
+  const isLegume = foodId === "peanut" || foodId === "soy"
 
   return (
     <span
       aria-hidden="true"
       className={cn(
         "grid size-10 shrink-0 place-items-center rounded-xl bg-nut-icon text-nut-ink",
-        isPeanut && "bg-peanut-icon text-peanut-ink",
+        isLegume && "bg-peanut-icon text-peanut-ink",
         className,
       )}
     >

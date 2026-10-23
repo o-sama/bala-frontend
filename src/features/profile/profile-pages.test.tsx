@@ -44,6 +44,8 @@ describe("profile priorities", () => {
 
     expect(screen.getByRole("tab", { name: "Food allergies" })).toHaveAttribute("aria-selected", "true")
     expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByText("Legume allergies")).toBeInTheDocument()
+    expect(screen.getByText("Soy")).toBeInTheDocument()
     expect(screen.queryByText("Penicillin")).not.toBeInTheDocument()
 
     await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
@@ -51,6 +53,22 @@ describe("profile priorities", () => {
     expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "true")
     expect(screen.getByText("Penicillin")).toBeInTheDocument()
     expect(screen.getByText("These medicine allergies are separate from food allergies.")).toBeInTheDocument()
+  })
+
+  it("keeps profile metadata at the top and emphasizes the unlisted-food notice", () => {
+    render(
+      <PublicProfilePage
+        profile={demoProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={handlers.onShowToStaff}
+      />,
+    )
+
+    expect(screen.getByText("Last updated: Oct 22, 2026")).toBeInTheDocument()
+    expect(screen.queryByText(/Share with your kitchen/)).not.toBeInTheDocument()
+    expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument()
+    expect(screen.getByRole("note")).toHaveTextContent("Foods not listed here have not been marked as safe.")
   })
 
   it("shows Alex's celiac disease as a strict condition rather than a sensitivity", () => {

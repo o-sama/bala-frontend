@@ -54,8 +54,11 @@ export function FoodProfileContent({ profile, language, showEyebrow }: FoodProfi
         <p className="leading-6 text-secondary-foreground">{copy.cannotAccommodate}</p>
       </section>
 
-      <p className="flex gap-2 text-xs leading-5 text-muted-foreground">
-        <Info className="mt-0.5 size-4 shrink-0" />
+      <p
+        role="note"
+        className="flex gap-3 rounded-xl border border-alert/25 bg-alert/5 px-4 py-3 text-sm font-semibold leading-5 text-alert"
+      >
+        <Info className="mt-0.5 size-5 shrink-0" />
         {copy.unlistedNotice}
       </p>
     </div>

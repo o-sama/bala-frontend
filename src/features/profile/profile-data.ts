@@ -8,6 +8,7 @@ export type FoodId =
   | "brazil-nut"
   | "macadamia-nut"
   | "peanut"
+  | "soy"
 export type AllergenFamilyId = "tree-nuts" | "legumes"
 export type SensitivityId = "lactose"
 export type MedicineAllergyId = "penicillin"
@@ -51,6 +52,7 @@ export const foods: Food[] = [
   { id: "brazil-nut", familyId: "tree-nuts" },
   { id: "macadamia-nut", familyId: "tree-nuts" },
   { id: "peanut", familyId: "legumes" },
+  { id: "soy", familyId: "legumes" },
 ]
 
 export const demoProfile: PublicProfile = {
@@ -58,7 +60,7 @@ export const demoProfile: PublicProfile = {
   firstName: "Alex",
   fullName: "Alex Morgan",
   updatedAt: "2026-10-22",
-  selectedFoodIds: ["walnut", "cashew", "peanut"],
+  selectedFoodIds: ["walnut", "cashew", "peanut", "soy"],
   sensitivityIds: ["lactose"],
   medicineAllergyIds: ["penicillin"],
   dietaryConditionIds: ["celiac"],

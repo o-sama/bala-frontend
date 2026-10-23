@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, Pill, ShieldAlert } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -33,15 +33,27 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
         </div>
         <div>
           <p className="font-bold text-foreground">{profile.fullName}</p>
-          <p className="text-xs text-muted-foreground">{copy.allergyProfile} · {copy.shareWithKitchen}</p>
+          <p className="text-xs text-muted-foreground">{copy.lastUpdated}: {date}</p>
         </div>
       </section>
 
       {hasMedicineTab ? (
         <Tabs defaultValue="food">
           <TabsList aria-label={copy.allergyProfile}>
-            <TabsTrigger value="food">{copy.foodAllergies}</TabsTrigger>
-            <TabsTrigger value="medicine">{copy.medicineAllergiesHeading}</TabsTrigger>
+            <TabsTrigger
+              value="food"
+              className="border-primary/30 bg-primary/5 text-primary data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            >
+              <ShieldAlert className="size-5 shrink-0" />
+              <span>{copy.foodAllergies}</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="medicine"
+              className="border-medicine-border bg-medicine-panel text-medicine-ink data-[state=active]:border-medicine-ink data-[state=active]:bg-medicine-ink data-[state=active]:text-white"
+            >
+              <Pill className="size-5 shrink-0" />
+              <span>{copy.medicineAllergiesHeading}</span>
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="food">
             <FoodProfileContent profile={profile} language={language} showEyebrow={false} />
@@ -59,9 +71,6 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
         <ArrowUpRight className="size-5" />
       </Button>
 
-      <footer className="border-t border-border pt-5 text-[0.7rem] text-muted-foreground">
-        {copy.profileOwner}: {profile.fullName} · {copy.updated}: {date}
-      </footer>
     </main>
   )
 }
