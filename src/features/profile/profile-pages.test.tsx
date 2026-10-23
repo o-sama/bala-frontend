@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
@@ -81,8 +81,12 @@ describe("profile priorities", () => {
       />,
     )
 
-    expect(screen.getByRole("heading", { name: "Celiac disease" })).toBeInTheDocument()
+    const strictFoodNeeds = screen.getByRole("group", { name: "Food allergies" })
+    expect(within(strictFoodNeeds).getByRole("heading", { name: "Celiac disease" })).toBeInTheDocument()
     expect(screen.getByText("Strictly gluten-free")).toBeInTheDocument()
+    expect(
+      screen.getByText("Serious autoimmune condition. Even small amounts of gluten or cross-contact can make food unsafe."),
+    ).toBeInTheDocument()
     expect(screen.getByText("Avoid wheat, barley, rye, and cross-contact with gluten.")).toBeInTheDocument()
   })
 

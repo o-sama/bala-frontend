@@ -33,15 +33,15 @@ export function FoodProfileContent({ profile, language, showEyebrow }: FoodProfi
         <p className="text-[0.95rem] leading-6 text-muted-foreground">{copy.profileIntro}</p>
       </section>
 
-      <div className="space-y-4">
+      <div className="space-y-4" role="group" aria-label={copy.foodAllergies}>
         {groups.map((group) => (
           <AllergenSection key={group.familyId} {...group} language={language} />
         ))}
-      </div>
 
-      {dietaryConditions.length > 0 && (
-        <DietaryConditionSection dietaryConditions={dietaryConditions} language={language} />
-      )}
+        {dietaryConditions.length > 0 && (
+          <DietaryConditionSection dietaryConditions={dietaryConditions} language={language} />
+        )}
+      </div>
 
       {sensitivities.length > 0 && <SensitivitySection sensitivities={sensitivities} language={language} />}
 

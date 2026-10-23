@@ -80,7 +80,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineEmergencyInstruction: "Tell medical personnel in an emergency.",
     strictlyGlutenFree: "Strictly gluten-free",
     celiacStaffHeading: "Celiac disease — strict gluten-free",
-    celiacExplanation: "This is an autoimmune condition, not a food allergy or sensitivity.",
+    celiacExplanation: "Serious autoimmune condition. Even small amounts of gluten or cross-contact can make food unsafe.",
     celiacAvoidanceInstruction: "Avoid wheat, barley, rye, and cross-contact with gluten.",
     families: { "tree-nuts": "Tree nut allergies", legumes: "Legume allergies" },
     foods: {
@@ -129,7 +129,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineEmergencyInstruction: "À signaler au personnel médical en cas d’urgence.",
     strictlyGlutenFree: "Strictement sans gluten",
     celiacStaffHeading: "Maladie cœliaque — sans gluten strict",
-    celiacExplanation: "Il s’agit d’une maladie auto-immune, et non d’une allergie ou sensibilité alimentaire.",
+    celiacExplanation: "Maladie auto-immune grave. Même de petites quantités de gluten ou un contact croisé peuvent rendre un aliment dangereux.",
     celiacAvoidanceInstruction: "Éviter le blé, l’orge, le seigle et tout contact croisé avec le gluten.",
     families: { "tree-nuts": "Allergies aux noix", legumes: "Allergies aux légumineuses" },
     foods: {
@@ -178,7 +178,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineEmergencyInstruction: "Informe al personal médico en caso de emergencia.",
     strictlyGlutenFree: "Estrictamente sin gluten",
     celiacStaffHeading: "Enfermedad celíaca — sin gluten estricto",
-    celiacExplanation: "Es una enfermedad autoinmune, no una alergia ni sensibilidad alimentaria.",
+    celiacExplanation: "Enfermedad autoinmune grave. Incluso pequeñas cantidades de gluten o el contacto cruzado pueden hacer que un alimento no sea seguro.",
     celiacAvoidanceInstruction: "Evite el trigo, la cebada, el centeno y el contacto cruzado con gluten.",
     families: { "tree-nuts": "Alergias a frutos de cáscara", legumes: "Alergias a las legumbres" },
     foods: {
@@ -227,7 +227,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineEmergencyInstruction: "يُرجى إبلاغ الطاقم الطبي في حالة الطوارئ.",
     strictlyGlutenFree: "خالٍ تمامًا من الغلوتين",
     celiacStaffHeading: "الداء البطني — خالٍ تمامًا من الغلوتين",
-    celiacExplanation: "هذه حالة مناعية ذاتية وليست حساسية أو تحسسًا غذائيًا.",
+    celiacExplanation: "حالة مناعية ذاتية خطيرة. حتى الكميات الصغيرة من الغلوتين أو التلامس العرضي قد تجعل الطعام غير آمن.",
     celiacAvoidanceInstruction: "تجنّب القمح والشعير والجاودار وأي تلامس عرضي مع الغلوتين.",
     families: { "tree-nuts": "حساسية المكسرات الشجرية", legumes: "حساسية البقوليات" },
     foods: {
@@ -276,7 +276,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineEmergencyInstruction: "Acil durumda sağlık personeline bildirin.",
     strictlyGlutenFree: "Kesinlikle glütensiz",
     celiacStaffHeading: "Çölyak hastalığı — kesinlikle glütensiz",
-    celiacExplanation: "Bu, gıda alerjisi veya hassasiyeti değil, otoimmün bir hastalıktır.",
+    celiacExplanation: "Ciddi bir otoimmün hastalıktır. Az miktarda glüten veya çapraz temas bile yiyeceği güvensiz hâle getirebilir.",
     celiacAvoidanceInstruction: "Buğday, arpa, çavdar ve glütenle çapraz temastan kaçının.",
     families: { "tree-nuts": "Ağaç yemişi alerjileri", legumes: "Baklagil alerjileri" },
     foods: {
