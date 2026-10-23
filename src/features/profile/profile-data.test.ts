@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import {
   getProfileById,
+  getSelectedDietaryConditions,
   getSelectedMedicineAllergies,
   getSelectedSensitivities,
   groupSelectedFoods,
@@ -65,6 +66,13 @@ describe("getSelectedMedicineAllergies", () => {
   })
 })
 
+describe("getSelectedDietaryConditions", () => {
+  it("returns celiac disease only when configured", () => {
+    expect(getSelectedDietaryConditions(["celiac"])).toEqual([{ id: "celiac" }])
+    expect(getSelectedDietaryConditions([])).toEqual([])
+  })
+})
+
 describe("getProfileById", () => {
   it("returns Talia's exact tree nut allergies without adding sensitivities", () => {
     expect(getProfileById("talia")).toMatchObject({
@@ -73,6 +81,7 @@ describe("getProfileById", () => {
       selectedFoodIds: ["walnut", "almond", "pecan", "brazil-nut", "macadamia-nut"],
       sensitivityIds: [],
       medicineAllergyIds: [],
+      dietaryConditionIds: [],
     })
   })
 
@@ -81,6 +90,7 @@ describe("getProfileById", () => {
       selectedFoodIds: expect.arrayContaining(["walnut", "peanut"]),
       sensitivityIds: ["lactose"],
       medicineAllergyIds: ["penicillin"],
+      dietaryConditionIds: ["celiac"],
     })
   })
 })

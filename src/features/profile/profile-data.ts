@@ -11,6 +11,7 @@ export type FoodId =
 export type AllergenFamilyId = "tree-nuts" | "legumes"
 export type SensitivityId = "lactose"
 export type MedicineAllergyId = "penicillin"
+export type DietaryConditionId = "celiac"
 
 export interface Food {
   id: FoodId
@@ -25,6 +26,7 @@ export interface PublicProfile {
   selectedFoodIds: FoodId[]
   sensitivityIds: SensitivityId[]
   medicineAllergyIds: MedicineAllergyId[]
+  dietaryConditionIds: DietaryConditionId[]
 }
 
 export interface Sensitivity {
@@ -33,6 +35,10 @@ export interface Sensitivity {
 
 export interface MedicineAllergy {
   id: MedicineAllergyId
+}
+
+export interface DietaryCondition {
+  id: DietaryConditionId
 }
 
 export const foods: Food[] = [
@@ -55,6 +61,7 @@ export const demoProfile: PublicProfile = {
   selectedFoodIds: ["walnut", "cashew", "peanut"],
   sensitivityIds: ["lactose"],
   medicineAllergyIds: ["penicillin"],
+  dietaryConditionIds: ["celiac"],
 }
 
 export const taliaProfile: PublicProfile = {
@@ -65,6 +72,7 @@ export const taliaProfile: PublicProfile = {
   selectedFoodIds: ["walnut", "almond", "pecan", "brazil-nut", "macadamia-nut"],
   sensitivityIds: [],
   medicineAllergyIds: [],
+  dietaryConditionIds: [],
 }
 
 const profiles: Record<string, PublicProfile> = {
@@ -74,6 +82,7 @@ const profiles: Record<string, PublicProfile> = {
 
 export const sensitivities: Sensitivity[] = [{ id: "lactose" }]
 export const medicineAllergies: MedicineAllergy[] = [{ id: "penicillin" }]
+export const dietaryConditions: DietaryCondition[] = [{ id: "celiac" }]
 
 export const familyOrder: AllergenFamilyId[] = ["tree-nuts", "legumes"]
 
@@ -92,6 +101,10 @@ export function getSelectedSensitivities(sensitivityIds: SensitivityId[]) {
 
 export function getSelectedMedicineAllergies(medicineAllergyIds: MedicineAllergyId[]) {
   return medicineAllergies.filter((medicineAllergy) => medicineAllergyIds.includes(medicineAllergy.id))
+}
+
+export function getSelectedDietaryConditions(dietaryConditionIds: DietaryConditionId[]) {
+  return dietaryConditions.filter((dietaryCondition) => dietaryConditionIds.includes(dietaryCondition.id))
 }
 
 export function getProfileById(profileId: string) {

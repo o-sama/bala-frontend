@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
 import { demoProfile, taliaProfile } from "@/features/profile/profile-data"
@@ -27,10 +28,11 @@ describe("profile priorities", () => {
     }
     expect(screen.getByRole("link", { name: "Bala home" })).toHaveAttribute("href", "#/p/talia")
     expect(screen.queryByRole("heading", { name: "Sensitivities (not allergies)" })).not.toBeInTheDocument()
-    expect(screen.queryByRole("heading", { name: "Medicine allergies" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("tab", { name: "Medicine allergies" })).not.toBeInTheDocument()
   })
 
-  it("shows Alex's medicine allergies separately from food allergies", () => {
+  it("shows Alex's medicine allergies in a separate tab", async () => {
+    const user = userEvent.setup()
     render(
       <PublicProfilePage
         profile={demoProfile}
@@ -40,9 +42,30 @@ describe("profile priorities", () => {
       />,
     )
 
-    expect(screen.getByRole("heading", { name: "Medicine allergies" })).toBeInTheDocument()
+    expect(screen.getByRole("tab", { name: "Food allergies" })).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "false")
+    expect(screen.queryByText("Penicillin")).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
+
+    expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "true")
     expect(screen.getByText("Penicillin")).toBeInTheDocument()
     expect(screen.getByText("These medicine allergies are separate from food allergies.")).toBeInTheDocument()
+  })
+
+  it("shows Alex's celiac disease as a strict condition rather than a sensitivity", () => {
+    render(
+      <PublicProfilePage
+        profile={demoProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={handlers.onShowToStaff}
+      />,
+    )
+
+    expect(screen.getByRole("heading", { name: "Celiac disease" })).toBeInTheDocument()
+    expect(screen.getByText("Strictly gluten-free")).toBeInTheDocument()
+    expect(screen.getByText("Avoid wheat, barley, rye, and cross-contact with gluten.")).toBeInTheDocument()
   })
 
   it("shows configured sensitivities as a separate, lower-priority request", () => {
@@ -84,6 +107,7 @@ describe("profile priorities", () => {
     )
 
     expect(screen.getByRole("heading", { name: "Allergies — strict avoidance" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Celiac disease — strict gluten-free" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Sensitivities — avoid if possible" })).toBeInTheDocument()
     expect(screen.getByText("Avoid ingredients and cross-contact")).toBeInTheDocument()

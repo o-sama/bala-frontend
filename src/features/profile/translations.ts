@@ -1,5 +1,6 @@
 import type {
   AllergenFamilyId,
+  DietaryConditionId,
   FoodId,
   MedicineAllergyId,
   SensitivityId,
@@ -39,10 +40,15 @@ interface Copy {
   medicineAllergiesStaffHeading: string
   medicineAllergyExplanation: string
   medicineEmergencyInstruction: string
+  strictlyGlutenFree: string
+  celiacStaffHeading: string
+  celiacExplanation: string
+  celiacAvoidanceInstruction: string
   families: Record<AllergenFamilyId, string>
   foods: Record<FoodId, string>
   sensitivities: Record<SensitivityId, string>
   medicines: Record<MedicineAllergyId, string>
+  dietaryConditions: Record<DietaryConditionId, string>
 }
 
 export const translations: Record<SupportedLanguage, Copy> = {
@@ -50,7 +56,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     languageName: "English",
     locale: "en-CA",
     direction: "ltr",
-    allergyProfile: "Food allergy profile",
+    allergyProfile: "Allergy profile",
     shareWithKitchen: "Share with your kitchen",
     foodAllergies: "Food allergies",
     profileHeading: "Please check my food allergies.",
@@ -76,6 +82,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "Medicine allergy — do not administer",
     medicineAllergyExplanation: "These medicine allergies are separate from food allergies.",
     medicineEmergencyInstruction: "Tell medical personnel in an emergency.",
+    strictlyGlutenFree: "Strictly gluten-free",
+    celiacStaffHeading: "Celiac disease — strict gluten-free",
+    celiacExplanation: "This is an autoimmune condition, not a food allergy or sensitivity.",
+    celiacAvoidanceInstruction: "Avoid wheat, barley, rye, and cross-contact with gluten.",
     families: { "tree-nuts": "Tree nut allergies", legumes: "Peanut allergy" },
     foods: {
       walnut: "Walnuts",
@@ -90,12 +100,13 @@ export const translations: Record<SupportedLanguage, Copy> = {
     },
     sensitivities: { lactose: "Lactose" },
     medicines: { penicillin: "Penicillin" },
+    dietaryConditions: { celiac: "Celiac disease" },
   },
   fr: {
     languageName: "Français",
     locale: "fr-CA",
     direction: "ltr",
-    allergyProfile: "Profil d’allergies alimentaires",
+    allergyProfile: "Profil d’allergies",
     shareWithKitchen: "À partager avec la cuisine",
     foodAllergies: "Allergies alimentaires",
     profileHeading: "Veuillez vérifier mes allergies alimentaires.",
@@ -121,6 +132,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "Allergie médicamenteuse — ne pas administrer",
     medicineAllergyExplanation: "Ces allergies médicamenteuses sont distinctes des allergies alimentaires.",
     medicineEmergencyInstruction: "À signaler au personnel médical en cas d’urgence.",
+    strictlyGlutenFree: "Strictement sans gluten",
+    celiacStaffHeading: "Maladie cœliaque — sans gluten strict",
+    celiacExplanation: "Il s’agit d’une maladie auto-immune, et non d’une allergie ou sensibilité alimentaire.",
+    celiacAvoidanceInstruction: "Éviter le blé, l’orge, le seigle et tout contact croisé avec le gluten.",
     families: { "tree-nuts": "Allergies aux noix", legumes: "Allergie aux arachides" },
     foods: {
       walnut: "Noix de Grenoble",
@@ -135,12 +150,13 @@ export const translations: Record<SupportedLanguage, Copy> = {
     },
     sensitivities: { lactose: "Lactose" },
     medicines: { penicillin: "Pénicilline" },
+    dietaryConditions: { celiac: "Maladie cœliaque" },
   },
   es: {
     languageName: "Español",
     locale: "es",
     direction: "ltr",
-    allergyProfile: "Perfil de alergias alimentarias",
+    allergyProfile: "Perfil de alergias",
     shareWithKitchen: "Compartir con la cocina",
     foodAllergies: "Alergias alimentarias",
     profileHeading: "Por favor, revise mis alergias alimentarias.",
@@ -166,6 +182,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "Alergia a medicamentos — no administrar",
     medicineAllergyExplanation: "Estas alergias a medicamentos son distintas de las alergias alimentarias.",
     medicineEmergencyInstruction: "Informe al personal médico en caso de emergencia.",
+    strictlyGlutenFree: "Estrictamente sin gluten",
+    celiacStaffHeading: "Enfermedad celíaca — sin gluten estricto",
+    celiacExplanation: "Es una enfermedad autoinmune, no una alergia ni sensibilidad alimentaria.",
+    celiacAvoidanceInstruction: "Evite el trigo, la cebada, el centeno y el contacto cruzado con gluten.",
     families: { "tree-nuts": "Alergias a frutos de cáscara", legumes: "Alergia al cacahuete" },
     foods: {
       walnut: "Nueces",
@@ -180,12 +200,13 @@ export const translations: Record<SupportedLanguage, Copy> = {
     },
     sensitivities: { lactose: "Lactosa" },
     medicines: { penicillin: "Penicilina" },
+    dietaryConditions: { celiac: "Enfermedad celíaca" },
   },
   ar: {
     languageName: "العربية",
     locale: "ar",
     direction: "rtl",
-    allergyProfile: "ملف حساسية الطعام",
+    allergyProfile: "ملف الحساسية",
     shareWithKitchen: "اعرضه على المطبخ",
     foodAllergies: "حساسيات الطعام",
     profileHeading: "يرجى التحقق من حساسياتي الغذائية.",
@@ -211,6 +232,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "حساسية دوائية — يُمنع إعطاؤه",
     medicineAllergyExplanation: "حساسية الأدوية منفصلة عن حساسية الطعام.",
     medicineEmergencyInstruction: "يُرجى إبلاغ الطاقم الطبي في حالة الطوارئ.",
+    strictlyGlutenFree: "خالٍ تمامًا من الغلوتين",
+    celiacStaffHeading: "الداء البطني — خالٍ تمامًا من الغلوتين",
+    celiacExplanation: "هذه حالة مناعية ذاتية وليست حساسية أو تحسسًا غذائيًا.",
+    celiacAvoidanceInstruction: "تجنّب القمح والشعير والجاودار وأي تلامس عرضي مع الغلوتين.",
     families: { "tree-nuts": "حساسية المكسرات الشجرية", legumes: "حساسية الفول السوداني" },
     foods: {
       walnut: "الجوز",
@@ -225,12 +250,13 @@ export const translations: Record<SupportedLanguage, Copy> = {
     },
     sensitivities: { lactose: "اللاكتوز" },
     medicines: { penicillin: "البنسلين" },
+    dietaryConditions: { celiac: "الداء البطني (السيلياك)" },
   },
   tr: {
     languageName: "Türkçe",
     locale: "tr-TR",
     direction: "ltr",
-    allergyProfile: "Gıda alerjisi profili",
+    allergyProfile: "Alerji profili",
     shareWithKitchen: "Mutfakla paylaşın",
     foodAllergies: "Gıda alerjileri",
     profileHeading: "Lütfen gıda alerjilerimi kontrol edin.",
@@ -256,6 +282,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "İlaç alerjisi — uygulamayın",
     medicineAllergyExplanation: "Bu ilaç alerjileri gıda alerjilerinden ayrıdır.",
     medicineEmergencyInstruction: "Acil durumda sağlık personeline bildirin.",
+    strictlyGlutenFree: "Kesinlikle glütensiz",
+    celiacStaffHeading: "Çölyak hastalığı — kesinlikle glütensiz",
+    celiacExplanation: "Bu, gıda alerjisi veya hassasiyeti değil, otoimmün bir hastalıktır.",
+    celiacAvoidanceInstruction: "Buğday, arpa, çavdar ve glütenle çapraz temastan kaçının.",
     families: { "tree-nuts": "Ağaç yemişi alerjileri", legumes: "Yer fıstığı alerjisi" },
     foods: {
       walnut: "Ceviz",
@@ -270,6 +300,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     },
     sensitivities: { lactose: "Laktoz" },
     medicines: { penicillin: "Penisilin" },
+    dietaryConditions: { celiac: "Çölyak hastalığı" },
   },
 }
 

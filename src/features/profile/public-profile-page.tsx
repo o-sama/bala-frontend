@@ -1,16 +1,11 @@
-import { ArrowUpRight, Info, Utensils } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { AllergenSection } from "@/features/profile/allergen-section"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AppHeader } from "@/features/profile/app-header"
+import { FoodProfileContent } from "@/features/profile/food-profile-content"
 import { MedicineAllergySection } from "@/features/profile/medicine-allergy-section"
-import {
-  getSelectedMedicineAllergies,
-  getSelectedSensitivities,
-  groupSelectedFoods,
-  type PublicProfile,
-} from "@/features/profile/profile-data"
-import { SensitivitySection } from "@/features/profile/sensitivity-section"
+import { getSelectedMedicineAllergies, type PublicProfile } from "@/features/profile/profile-data"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
 interface PublicProfilePageProps {
@@ -22,15 +17,14 @@ interface PublicProfilePageProps {
 
 export function PublicProfilePage({ profile, language, onLanguageChange, onShowToStaff }: PublicProfilePageProps) {
   const copy = translations[language]
-  const groups = groupSelectedFoods(profile.selectedFoodIds)
   const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
-  const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
+  const hasMedicineTab = medicineAllergies.length > 0
   const date = new Intl.DateTimeFormat(copy.locale, { dateStyle: "medium" }).format(
     new Date(`${profile.updatedAt}T12:00:00`),
   )
 
   return (
-    <main className="phone-panel space-y-6" dir={copy.direction} aria-labelledby="profile-heading">
+    <main className="phone-panel space-y-6" dir={copy.direction} aria-label={copy.allergyProfile}>
       <AppHeader language={language} onLanguageChange={onLanguageChange} homeHref={`#/p/${profile.id}`} />
 
       <section className="flex items-center gap-3" aria-label="Profile owner">
@@ -43,44 +37,27 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
         </div>
       </section>
 
-      <section className="space-y-3">
-        <p className="eyebrow">{copy.foodAllergies}</p>
-        <h1 id="profile-heading" className="text-3xl font-bold leading-tight tracking-tight text-foreground">
-          {copy.profileHeading}
-        </h1>
-        <p className="text-[0.95rem] leading-6 text-muted-foreground">{copy.profileIntro}</p>
-      </section>
-
-      <div className="space-y-4">
-        {groups.map((group) => (
-          <AllergenSection key={group.familyId} {...group} language={language} />
-        ))}
-      </div>
-
-      {medicineAllergies.length > 0 && (
-        <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} />
+      {hasMedicineTab ? (
+        <Tabs defaultValue="food">
+          <TabsList aria-label={copy.allergyProfile}>
+            <TabsTrigger value="food">{copy.foodAllergies}</TabsTrigger>
+            <TabsTrigger value="medicine">{copy.medicineAllergiesHeading}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="food">
+            <FoodProfileContent profile={profile} language={language} showEyebrow={false} />
+          </TabsContent>
+          <TabsContent value="medicine">
+            <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} />
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <FoodProfileContent profile={profile} language={language} showEyebrow />
       )}
-
-      {sensitivities.length > 0 && <SensitivitySection sensitivities={sensitivities} language={language} />}
 
       <Button size="lg" className="w-full justify-between" onClick={onShowToStaff}>
         {copy.showToStaff}
         <ArrowUpRight className="size-5" />
       </Button>
-
-      <section className="space-y-3">
-        <h2 className="flex items-center gap-2 text-lg font-bold text-foreground">
-          <Utensils className="size-5" />
-          {copy.preparationHeading}
-        </h2>
-        <p className="leading-6 text-secondary-foreground">{copy.avoidCrossContact}</p>
-        <p className="leading-6 text-secondary-foreground">{copy.cannotAccommodate}</p>
-      </section>
-
-      <p className="flex gap-2 text-xs leading-5 text-muted-foreground">
-        <Info className="mt-0.5 size-4 shrink-0" />
-        {copy.unlistedNotice}
-      </p>
 
       <footer className="border-t border-border pt-5 text-[0.7rem] text-muted-foreground">
         {copy.profileOwner}: {profile.fullName} · {copy.updated}: {date}

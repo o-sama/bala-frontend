@@ -3,12 +3,14 @@ import { ArrowLeft, TriangleAlert } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LanguageSelect } from "@/features/profile/language-select"
 import {
+  getSelectedDietaryConditions,
   getSelectedMedicineAllergies,
   getSelectedSensitivities,
   groupSelectedFoods,
   type PublicProfile,
 } from "@/features/profile/profile-data"
 import { StaffAllergyBoard } from "@/features/profile/staff-allergy-board"
+import { StaffDietaryConditionBoard } from "@/features/profile/staff-dietary-condition-board"
 import { StaffMedicineAllergyBoard } from "@/features/profile/staff-medicine-allergy-board"
 import { StaffSensitivityBoard } from "@/features/profile/staff-sensitivity-board"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
@@ -24,6 +26,7 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
   const copy = translations[language]
   const groups = groupSelectedFoods(profile.selectedFoodIds)
   const selectedFoods = groups.flatMap((group) => group.foods)
+  const dietaryConditions = getSelectedDietaryConditions(profile.dietaryConditionIds)
   const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
 
@@ -46,6 +49,10 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
       </section>
 
       <StaffAllergyBoard foods={selectedFoods} language={language} />
+
+      {dietaryConditions.length > 0 && (
+        <StaffDietaryConditionBoard dietaryConditions={dietaryConditions} language={language} />
+      )}
 
       {medicineAllergies.length > 0 && (
         <StaffMedicineAllergyBoard medicineAllergies={medicineAllergies} language={language} />

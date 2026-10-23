@@ -28,6 +28,9 @@
   --color-medicine-panel: var(--medicine-panel);
   --color-medicine-border: var(--medicine-border);
   --color-medicine-ink: var(--medicine-ink);
+  --color-condition-panel: var(--condition-panel);
+  --color-condition-border: var(--condition-border);
+  --color-condition-ink: var(--condition-ink);
 }
 
 :root {
@@ -62,6 +65,9 @@
   --medicine-panel: #f2efff;
   --medicine-border: #afa2dc;
   --medicine-ink: #43366f;
+  --condition-panel: #eaf4ff;
+  --condition-border: #9fc4df;
+  --condition-ink: #234f68;
 }
 
 * {
