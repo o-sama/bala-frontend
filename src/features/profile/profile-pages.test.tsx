@@ -12,7 +12,7 @@ const handlers = {
 }
 
 describe("profile priorities", () => {
-  it("shows Talia's exact allergy list and no sensitivity section", () => {
+  it("shows Talia's exact allergy list without unconfigured sections", () => {
     render(
       <PublicProfilePage
         profile={taliaProfile}
@@ -27,6 +27,22 @@ describe("profile priorities", () => {
     }
     expect(screen.getByRole("link", { name: "Bala home" })).toHaveAttribute("href", "#/p/talia")
     expect(screen.queryByRole("heading", { name: "Sensitivities (not allergies)" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Medicine allergies" })).not.toBeInTheDocument()
+  })
+
+  it("shows Alex's medicine allergies separately from food allergies", () => {
+    render(
+      <PublicProfilePage
+        profile={demoProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={handlers.onShowToStaff}
+      />,
+    )
+
+    expect(screen.getByRole("heading", { name: "Medicine allergies" })).toBeInTheDocument()
+    expect(screen.getByText("Penicillin")).toBeInTheDocument()
+    expect(screen.getByText("These medicine allergies are separate from food allergies.")).toBeInTheDocument()
   })
 
   it("shows configured sensitivities as a separate, lower-priority request", () => {
@@ -57,7 +73,7 @@ describe("profile priorities", () => {
     expect(screen.queryByRole("heading", { name: "Sensitivities (not allergies)" })).not.toBeInTheDocument()
   })
 
-  it("gives staff an explicit strict-allergy area and a secondary sensitivity area", () => {
+  it("gives staff separate food, medicine, and sensitivity areas", () => {
     render(
       <StaffViewPage
         profile={demoProfile}
@@ -68,6 +84,7 @@ describe("profile priorities", () => {
     )
 
     expect(screen.getByRole("heading", { name: "Allergies — strict avoidance" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Sensitivities — avoid if possible" })).toBeInTheDocument()
     expect(screen.getByText("Avoid ingredients and cross-contact")).toBeInTheDocument()
   })

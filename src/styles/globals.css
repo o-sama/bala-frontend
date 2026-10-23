@@ -25,6 +25,9 @@
   --color-sensitivity-panel: var(--sensitivity-panel);
   --color-sensitivity-border: var(--sensitivity-border);
   --color-sensitivity-ink: var(--sensitivity-ink);
+  --color-medicine-panel: var(--medicine-panel);
+  --color-medicine-border: var(--medicine-border);
+  --color-medicine-ink: var(--medicine-ink);
 }
 
 :root {
@@ -56,6 +59,9 @@
   --sensitivity-panel: #fff7dc;
   --sensitivity-border: #e7c96b;
   --sensitivity-ink: #665014;
+  --medicine-panel: #f2efff;
+  --medicine-border: #afa2dc;
+  --medicine-ink: #43366f;
 }
 
 * {

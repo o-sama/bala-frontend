@@ -3,7 +3,13 @@ import { ArrowUpRight, Info, Utensils } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AllergenSection } from "@/features/profile/allergen-section"
 import { AppHeader } from "@/features/profile/app-header"
-import { getSelectedSensitivities, groupSelectedFoods, type PublicProfile } from "@/features/profile/profile-data"
+import { MedicineAllergySection } from "@/features/profile/medicine-allergy-section"
+import {
+  getSelectedMedicineAllergies,
+  getSelectedSensitivities,
+  groupSelectedFoods,
+  type PublicProfile,
+} from "@/features/profile/profile-data"
 import { SensitivitySection } from "@/features/profile/sensitivity-section"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
@@ -17,6 +23,7 @@ interface PublicProfilePageProps {
 export function PublicProfilePage({ profile, language, onLanguageChange, onShowToStaff }: PublicProfilePageProps) {
   const copy = translations[language]
   const groups = groupSelectedFoods(profile.selectedFoodIds)
+  const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
   const date = new Intl.DateTimeFormat(copy.locale, { dateStyle: "medium" }).format(
     new Date(`${profile.updatedAt}T12:00:00`),
@@ -49,6 +56,10 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
           <AllergenSection key={group.familyId} {...group} language={language} />
         ))}
       </div>
+
+      {medicineAllergies.length > 0 && (
+        <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} />
+      )}
 
       {sensitivities.length > 0 && <SensitivitySection sensitivities={sensitivities} language={language} />}
 

@@ -10,6 +10,7 @@ export type FoodId =
   | "peanut"
 export type AllergenFamilyId = "tree-nuts" | "legumes"
 export type SensitivityId = "lactose"
+export type MedicineAllergyId = "penicillin"
 
 export interface Food {
   id: FoodId
@@ -23,10 +24,15 @@ export interface PublicProfile {
   updatedAt: string
   selectedFoodIds: FoodId[]
   sensitivityIds: SensitivityId[]
+  medicineAllergyIds: MedicineAllergyId[]
 }
 
 export interface Sensitivity {
   id: SensitivityId
+}
+
+export interface MedicineAllergy {
+  id: MedicineAllergyId
 }
 
 export const foods: Food[] = [
@@ -48,6 +54,7 @@ export const demoProfile: PublicProfile = {
   updatedAt: "2026-10-22",
   selectedFoodIds: ["walnut", "cashew", "peanut"],
   sensitivityIds: ["lactose"],
+  medicineAllergyIds: ["penicillin"],
 }
 
 export const taliaProfile: PublicProfile = {
@@ -57,6 +64,7 @@ export const taliaProfile: PublicProfile = {
   updatedAt: "2026-10-22",
   selectedFoodIds: ["walnut", "almond", "pecan", "brazil-nut", "macadamia-nut"],
   sensitivityIds: [],
+  medicineAllergyIds: [],
 }
 
 const profiles: Record<string, PublicProfile> = {
@@ -65,6 +73,7 @@ const profiles: Record<string, PublicProfile> = {
 }
 
 export const sensitivities: Sensitivity[] = [{ id: "lactose" }]
+export const medicineAllergies: MedicineAllergy[] = [{ id: "penicillin" }]
 
 export const familyOrder: AllergenFamilyId[] = ["tree-nuts", "legumes"]
 
@@ -79,6 +88,10 @@ export function groupSelectedFoods(selectedFoodIds: FoodId[]) {
 
 export function getSelectedSensitivities(sensitivityIds: SensitivityId[]) {
   return sensitivities.filter((sensitivity) => sensitivityIds.includes(sensitivity.id))
+}
+
+export function getSelectedMedicineAllergies(medicineAllergyIds: MedicineAllergyId[]) {
+  return medicineAllergies.filter((medicineAllergy) => medicineAllergyIds.includes(medicineAllergy.id))
 }
 
 export function getProfileById(profileId: string) {

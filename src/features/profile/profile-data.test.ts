@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest"
 
-import { getProfileById, getSelectedSensitivities, groupSelectedFoods } from "@/features/profile/profile-data"
+import {
+  getProfileById,
+  getSelectedMedicineAllergies,
+  getSelectedSensitivities,
+  groupSelectedFoods,
+} from "@/features/profile/profile-data"
 import { detectLanguage } from "@/features/profile/translations"
 
 describe("groupSelectedFoods", () => {
@@ -50,6 +55,16 @@ describe("getSelectedSensitivities", () => {
   })
 })
 
+describe("getSelectedMedicineAllergies", () => {
+  it("returns only configured medicine allergies", () => {
+    expect(getSelectedMedicineAllergies(["penicillin"])).toEqual([{ id: "penicillin" }])
+  })
+
+  it("returns an empty list when no medicine allergies are configured", () => {
+    expect(getSelectedMedicineAllergies([])).toEqual([])
+  })
+})
+
 describe("getProfileById", () => {
   it("returns Talia's exact tree nut allergies without adding sensitivities", () => {
     expect(getProfileById("talia")).toMatchObject({
@@ -57,6 +72,15 @@ describe("getProfileById", () => {
       fullName: "Talia",
       selectedFoodIds: ["walnut", "almond", "pecan", "brazil-nut", "macadamia-nut"],
       sensitivityIds: [],
+      medicineAllergyIds: [],
+    })
+  })
+
+  it("keeps at least one example from every supported category on Alex's demo", () => {
+    expect(getProfileById("alex-demo")).toMatchObject({
+      selectedFoodIds: expect.arrayContaining(["walnut", "peanut"]),
+      sensitivityIds: ["lactose"],
+      medicineAllergyIds: ["penicillin"],
     })
   })
 })

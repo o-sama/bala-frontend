@@ -1,4 +1,9 @@
-import type { AllergenFamilyId, FoodId, SensitivityId } from "@/features/profile/profile-data"
+import type {
+  AllergenFamilyId,
+  FoodId,
+  MedicineAllergyId,
+  SensitivityId,
+} from "@/features/profile/profile-data"
 
 export const supportedLanguages = ["en", "fr", "es", "ar", "tr"] as const
 
@@ -30,9 +35,14 @@ interface Copy {
   sensitivitiesStaffHeading: string
   avoidIfPossible: string
   sensitivityExplanation: string
+  medicineAllergiesHeading: string
+  medicineAllergiesStaffHeading: string
+  medicineAllergyExplanation: string
+  medicineEmergencyInstruction: string
   families: Record<AllergenFamilyId, string>
   foods: Record<FoodId, string>
   sensitivities: Record<SensitivityId, string>
+  medicines: Record<MedicineAllergyId, string>
 }
 
 export const translations: Record<SupportedLanguage, Copy> = {
@@ -62,6 +72,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     sensitivitiesStaffHeading: "Sensitivities — avoid if possible",
     avoidIfPossible: "Avoid if possible",
     sensitivityExplanation: "These are preferences for comfort and are not food allergies.",
+    medicineAllergiesHeading: "Medicine allergies",
+    medicineAllergiesStaffHeading: "Medicine allergy — do not administer",
+    medicineAllergyExplanation: "These medicine allergies are separate from food allergies.",
+    medicineEmergencyInstruction: "Tell medical personnel in an emergency.",
     families: { "tree-nuts": "Tree nut allergies", legumes: "Peanut allergy" },
     foods: {
       walnut: "Walnuts",
@@ -75,6 +89,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       peanut: "Peanuts",
     },
     sensitivities: { lactose: "Lactose" },
+    medicines: { penicillin: "Penicillin" },
   },
   fr: {
     languageName: "Français",
@@ -102,6 +117,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     sensitivitiesStaffHeading: "Sensibilités — à éviter si possible",
     avoidIfPossible: "À éviter si possible",
     sensitivityExplanation: "Ce sont des préférences pour le confort et non des allergies alimentaires.",
+    medicineAllergiesHeading: "Allergies médicamenteuses",
+    medicineAllergiesStaffHeading: "Allergie médicamenteuse — ne pas administrer",
+    medicineAllergyExplanation: "Ces allergies médicamenteuses sont distinctes des allergies alimentaires.",
+    medicineEmergencyInstruction: "À signaler au personnel médical en cas d’urgence.",
     families: { "tree-nuts": "Allergies aux noix", legumes: "Allergie aux arachides" },
     foods: {
       walnut: "Noix de Grenoble",
@@ -115,6 +134,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       peanut: "Arachides",
     },
     sensitivities: { lactose: "Lactose" },
+    medicines: { penicillin: "Pénicilline" },
   },
   es: {
     languageName: "Español",
@@ -142,6 +162,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     sensitivitiesStaffHeading: "Sensibilidades — evitar si es posible",
     avoidIfPossible: "Evitar si es posible",
     sensitivityExplanation: "Son preferencias para mayor comodidad y no son alergias alimentarias.",
+    medicineAllergiesHeading: "Alergias a medicamentos",
+    medicineAllergiesStaffHeading: "Alergia a medicamentos — no administrar",
+    medicineAllergyExplanation: "Estas alergias a medicamentos son distintas de las alergias alimentarias.",
+    medicineEmergencyInstruction: "Informe al personal médico en caso de emergencia.",
     families: { "tree-nuts": "Alergias a frutos de cáscara", legumes: "Alergia al cacahuete" },
     foods: {
       walnut: "Nueces",
@@ -155,6 +179,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       peanut: "Cacahuetes",
     },
     sensitivities: { lactose: "Lactosa" },
+    medicines: { penicillin: "Penicilina" },
   },
   ar: {
     languageName: "العربية",
@@ -182,6 +207,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     sensitivitiesStaffHeading: "أطعمة تسبب انزعاجًا — تجنّبها إن أمكن",
     avoidIfPossible: "تجنّبها إن أمكن",
     sensitivityExplanation: "قد تسبب هذه الأطعمة انزعاجًا، لكنها ليست حساسية غذائية.",
+    medicineAllergiesHeading: "حساسية الأدوية",
+    medicineAllergiesStaffHeading: "حساسية دوائية — يُمنع إعطاؤه",
+    medicineAllergyExplanation: "حساسية الأدوية منفصلة عن حساسية الطعام.",
+    medicineEmergencyInstruction: "يُرجى إبلاغ الطاقم الطبي في حالة الطوارئ.",
     families: { "tree-nuts": "حساسية المكسرات الشجرية", legumes: "حساسية الفول السوداني" },
     foods: {
       walnut: "الجوز",
@@ -195,6 +224,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       peanut: "الفول السوداني",
     },
     sensitivities: { lactose: "اللاكتوز" },
+    medicines: { penicillin: "البنسلين" },
   },
   tr: {
     languageName: "Türkçe",
@@ -222,6 +252,10 @@ export const translations: Record<SupportedLanguage, Copy> = {
     sensitivitiesStaffHeading: "Hassasiyetler — mümkünse kaçının",
     avoidIfPossible: "Mümkünse kaçının",
     sensitivityExplanation: "Bunlar rahatlık amaçlı tercihlerdir ve gıda alerjisi değildir.",
+    medicineAllergiesHeading: "İlaç alerjileri",
+    medicineAllergiesStaffHeading: "İlaç alerjisi — uygulamayın",
+    medicineAllergyExplanation: "Bu ilaç alerjileri gıda alerjilerinden ayrıdır.",
+    medicineEmergencyInstruction: "Acil durumda sağlık personeline bildirin.",
     families: { "tree-nuts": "Ağaç yemişi alerjileri", legumes: "Yer fıstığı alerjisi" },
     foods: {
       walnut: "Ceviz",
@@ -235,6 +269,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
       peanut: "Yer fıstığı",
     },
     sensitivities: { lactose: "Laktoz" },
+    medicines: { penicillin: "Penisilin" },
   },
 }
 
