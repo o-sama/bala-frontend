@@ -15,7 +15,7 @@ export function DietaryConditionSection({ dietaryConditions, language }: Dietary
   return dietaryConditions.map((condition) => (
     <Card key={condition.id} className="overflow-hidden border border-s-4 border-border border-s-condition-border bg-card text-foreground shadow-sm">
       <CardHeader className="px-5 pt-5">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-3">
           <h2 className="flex items-center gap-2 text-lg font-bold text-condition-ink">
             <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-condition-panel">
               <WheatOff className="size-5" />

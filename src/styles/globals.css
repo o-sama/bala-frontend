@@ -94,7 +94,8 @@ label[for] {
 }
 
 .phone-panel {
-  width: min(100%, 390px);
+  width: min(100%, 1040px);
+  overflow-wrap: anywhere;
   min-height: calc(100svh - 2.5rem);
   margin-inline: auto;
   padding: 1.5rem;
@@ -112,24 +113,74 @@ label[for] {
   text-transform: uppercase;
 }
 
-.large-text-mode p,
-.large-text-mode dd,
-.large-text-mode label,
-.large-text-mode button,
-.large-text-mode a:not([aria-label="Bala home"]) {
-  font-size: 1.05rem;
+.profile-body,
+.staff-content {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.profile-body > *,
+.staff-content > * {
+  min-width: 0;
+}
+
+.large-text-mode {
+  --text-xs: 1rem;
+  --text-sm: 1.1rem;
+  --text-base: 1.2rem;
+  --text-lg: 1.35rem;
+  --text-xl: 1.55rem;
+  --text-2xl: 1.8rem;
+  --text-3xl: 2.1rem;
+}
+
+.large-text-mode :is(p, dd, dt, label, button, a, span) {
   line-height: 1.55;
 }
 
-.large-text-mode h2 {
-  font-size: 1.35rem;
-  line-height: 1.35;
+.large-text-mode [class*="text-[0."] {
+  font-size: 1rem;
+}
+
+.large-text-mode button,
+.communication-toolbar button {
+  min-height: 2.75rem;
+  height: auto;
+  white-space: normal;
+}
+
+.communication-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
+
+.phone-panel :is(h1, h2, p, dd) {
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .phone-panel {
+    padding: 2rem;
+  }
+
+  .profile-body,
+  .staff-content {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .65fr);
+  }
+
+  .profile-body > :only-child,
+  .staff-content > :only-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 420px) {
   .phone-panel {
     min-height: calc(100svh - 1rem);
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 1.25rem;
   }
 }

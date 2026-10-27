@@ -1,6 +1,6 @@
-import { useState } from "react"
 import { ArrowUpRight, Pill, ShieldAlert } from "lucide-react"
 
+import { useLargeText } from "@/app/viewer-preferences"
 import type { ProfileSection } from "@/app/use-hash-route"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -30,7 +30,7 @@ export function PublicProfilePage({
   onActiveSectionChange,
   onShowToStaff,
 }: PublicProfilePageProps) {
-  const [isLargeText, setIsLargeText] = useState(false)
+  const [isLargeText, setIsLargeText] = useLargeText()
   const copy = translations[language]
   const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
   const hasMedicineTab = medicineAllergies.length > 0
@@ -57,50 +57,52 @@ export function PublicProfilePage({
         </div>
       </section>
 
-      {hasMedicineTab ? (
-        <Tabs
-          value={visibleSection}
-          onValueChange={(value) => {
-            const section = value as ProfileSection
-            onActiveSectionChange(section)
-          }}
-        >
-          <TabsList aria-label={copy.allergyProfile}>
-            <TabsTrigger
-              value="food"
-              className="border-primary/30 bg-primary/5 text-primary data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-            >
-              <ShieldAlert className="size-5 shrink-0" />
-              <span>{copy.foodAllergies}</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="medicine"
-              className="border-medicine-border bg-medicine-panel text-medicine-ink data-[state=active]:border-medicine-ink data-[state=active]:bg-medicine-ink data-[state=active]:text-white"
-            >
-              <Pill className="size-5 shrink-0" />
-              <span>{copy.medicineAllergiesHeading}</span>
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="food">
-            <FoodProfileContent profile={profile} language={language} showEyebrow={false} />
-          </TabsContent>
-          <TabsContent value="medicine">
-            <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} />
-          </TabsContent>
-        </Tabs>
-      ) : (
-        <FoodProfileContent profile={profile} language={language} showEyebrow />
-      )}
-
-      {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
-
       <CommunicationTools
-        key={language}
+        key={`${profile.id}:${visibleSection}:${language}`}
         language={language}
         speechText={getProfileSpeechText(profile, language, visibleSection)}
         isLargeText={isLargeText}
         onLargeTextChange={setIsLargeText}
       />
+
+      <div className="profile-body">
+        {hasMedicineTab ? (
+          <Tabs
+            value={visibleSection}
+            onValueChange={(value) => {
+              const section = value as ProfileSection
+              onActiveSectionChange(section)
+            }}
+          >
+            <TabsList aria-label={copy.allergyProfile}>
+              <TabsTrigger
+                value="food"
+                className="border-primary/30 bg-primary/5 text-primary data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <ShieldAlert className="size-5 shrink-0" />
+                <span>{copy.foodAllergies}</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="medicine"
+                className="border-medicine-border bg-medicine-panel text-medicine-ink data-[state=active]:border-medicine-ink data-[state=active]:bg-medicine-ink data-[state=active]:text-white"
+              >
+                <Pill className="size-5 shrink-0" />
+                <span>{copy.medicineAllergiesHeading}</span>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="food">
+              <FoodProfileContent profile={profile} language={language} showEyebrow={false} />
+            </TabsContent>
+            <TabsContent value="medicine">
+              <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} details={profile.medicineAllergyDetails} />
+            </TabsContent>
+          </Tabs>
+        ) : (
+          <FoodProfileContent profile={profile} language={language} showEyebrow />
+        )}
+
+        {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
+      </div>
 
       <div className="sticky bottom-3 z-20 rounded-2xl bg-background/90 p-1.5 shadow-xl backdrop-blur">
         <Button size="lg" className="w-full justify-between" onClick={() => onShowToStaff(visibleSection)}>

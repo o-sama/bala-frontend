@@ -446,7 +446,7 @@ export function detectLanguage(languages: readonly string[] = navigator.language
   for (const browserLanguage of languages) {
     const languageCode = browserLanguage.toLowerCase().split("-")[0]
     const supportedLanguage = supportedLanguages.find(
-      (language): language is Exclude<SupportedLanguage, "en"> => language !== "en" && language === languageCode,
+      (language) => language === languageCode,
     )
 
     if (supportedLanguage) return supportedLanguage

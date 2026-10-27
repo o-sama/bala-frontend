@@ -20,6 +20,13 @@ export interface Food {
   familyId: AllergenFamilyId
 }
 
+export type LocalizedProfileText = Partial<Record<ProfileLanguage, string>>
+
+export interface MedicineAllergyDetails {
+  reaction?: LocalizedProfileText
+  notes?: LocalizedProfileText
+}
+
 export interface PublicProfile {
   id: string
   firstName: string
@@ -28,6 +35,7 @@ export interface PublicProfile {
   selectedFoodIds: FoodId[]
   sensitivityIds: SensitivityId[]
   medicineAllergyIds: MedicineAllergyId[]
+  medicineAllergyDetails?: Partial<Record<MedicineAllergyId, MedicineAllergyDetails>>
   dietaryConditionIds: DietaryConditionId[]
   emergencyInfo?: EmergencyInfo
 }
@@ -70,10 +78,25 @@ export const demoProfile: PublicProfile = {
   id: "alex-demo",
   firstName: "Alex",
   fullName: "Alex Morgan",
-  updatedAt: "2026-10-22",
+  updatedAt: "2026-10-26",
   selectedFoodIds: ["walnut", "cashew", "peanut", "soy"],
   sensitivityIds: ["lactose"],
   medicineAllergyIds: ["penicillin"],
+  medicineAllergyDetails: {
+    penicillin: {
+      reaction: {
+        en: "Hives and itching", fr: "Urticaire et démangeaisons", es: "Urticaria y picazón",
+        ar: "الشَّرَى وَالحَكَّة", tr: "Kurdeşen ve kaşıntı",
+      },
+      notes: {
+        en: "Reaction reported in childhood. These are fictional demo details.",
+        fr: "Réaction signalée pendant l’enfance. Informations fictives de démonstration.",
+        es: "Reacción notificada en la infancia. Datos ficticios de demostración.",
+        ar: "أُبْلِغَ عَنْ رَدِّ الفِعْلِ فِي الطُّفُولَة. هَذِهِ تَفَاصِيلُ خَيَالِيَّةٌ لِلْعَرْض.",
+        tr: "Çocuklukta bildirilen reaksiyon. Bunlar kurgusal demo bilgileridir.",
+      },
+    },
+  },
   dietaryConditionIds: ["celiac"],
   emergencyInfo: {
     carriesEpinephrine: true,

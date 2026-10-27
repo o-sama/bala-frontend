@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ArrowLeft, Pill, TriangleAlert } from "lucide-react"
 
+import { useLargeText } from "@/app/viewer-preferences"
 import type { ProfileSection } from "@/app/use-hash-route"
 import { Button } from "@/components/ui/button"
 import { CommunicationTools } from "@/features/profile/communication-tools"
@@ -31,7 +32,7 @@ interface StaffViewPageProps {
 }
 
 export function StaffViewPage({ profile, language, onLanguageChange, section = "food", onBack }: StaffViewPageProps) {
-  const [isLargeText, setIsLargeText] = useState(false)
+  const [isLargeText, setIsLargeText] = useLargeText()
   const [checkedItems, setCheckedItems] = useState<string[]>([])
   const copy = translations[language]
   const groups = groupSelectedFoods(profile.selectedFoodIds)
@@ -69,40 +70,55 @@ export function StaffViewPage({ profile, language, onLanguageChange, section = "
       </section>
 
       <CommunicationTools
-        key={language}
+        key={`${profile.id}:${visibleSection}:${language}`}
         language={language}
         speechText={getProfileSpeechText(profile, language, visibleSection)}
         isLargeText={isLargeText}
         onLargeTextChange={setIsLargeText}
       />
 
-      {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
-
-      {visibleSection === "food" && <StaffAllergyBoard foods={selectedFoods} language={language} />}
-
-      {visibleSection === "food" && dietaryConditions.length > 0 && (
-        <StaffDietaryConditionBoard dietaryConditions={dietaryConditions} language={language} />
+      {profile.emergencyInfo && (
+        <a href="#emergency-heading" onClick={(event) => {
+          event.preventDefault()
+          document.getElementById("emergency-heading")?.scrollIntoView({ behavior: "instant", block: "start" })
+          document.getElementById("emergency-heading")?.focus()
+        }} className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-alert/30 bg-alert/5 px-4 py-2 font-bold text-alert">
+          {copy.emergencyInformation}
+        </a>
       )}
 
-      {visibleSection === "medicine" && (
-        <StaffMedicineAllergyBoard medicineAllergies={medicineAllergies} language={language} />
-      )}
+      <div className="staff-content">
+        <div className="space-y-6">
 
-      {visibleSection === "food" && sensitivities.length > 0 && (
-        <StaffSensitivityBoard sensitivities={sensitivities} language={language} />
-      )}
+          {visibleSection === "food" && <StaffAllergyBoard foods={selectedFoods} language={language} />}
 
-      {visibleSection === "food" && (
-        <StaffPreparationChecklist
-          language={language}
-          checkedItems={checkedItems}
-          onCheckedItemsChange={setCheckedItems}
-        />
-      )}
+          {visibleSection === "food" && dietaryConditions.length > 0 && (
+            <StaffDietaryConditionBoard dietaryConditions={dietaryConditions} language={language} />
+          )}
 
-      <p className="rounded-2xl border border-border bg-background px-5 py-4 text-lg font-bold leading-6 text-secondary-foreground">
-        {visibleSection === "medicine" ? copy.medicineAlternativeInstruction : copy.cannotAccommodate}
-      </p>
+          {visibleSection === "medicine" && (
+            <StaffMedicineAllergyBoard medicineAllergies={medicineAllergies} language={language} details={profile.medicineAllergyDetails} />
+          )}
+
+          {visibleSection === "food" && sensitivities.length > 0 && (
+            <StaffSensitivityBoard sensitivities={sensitivities} language={language} />
+          )}
+
+          {visibleSection === "food" && (
+            <StaffPreparationChecklist
+              language={language}
+              checkedItems={checkedItems}
+              onCheckedItemsChange={setCheckedItems}
+            />
+          )}
+
+          <p className="rounded-2xl border border-border bg-background px-5 py-4 text-lg font-bold leading-6 text-secondary-foreground">
+            {visibleSection === "medicine" ? copy.medicineAlternativeInstruction : copy.cannotAccommodate}
+          </p>
+
+        </div>
+        {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
+      </div>
 
       <footer className="flex items-center justify-between border-t border-border pt-6 font-bold text-foreground">
         <span>{copy.thankYou}</span>

@@ -10,6 +10,9 @@ interface SpokenCopy {
   foodIntro: string
   medicineIntro: string
   foodListLabel: string
+  celiacExplanation: string
+  celiacAvoidanceInstruction: string
+  avoidCrossContact: string
   medicineListLabel: string
   sensitivityListLabel: string
   emergencyInformation: string
@@ -26,8 +29,11 @@ interface SpokenCopy {
 
 export const spokenTranslations: Partial<Record<SupportedLanguage, SpokenCopy>> = {
   ar: {
-    foodIntro: "لَدَيَّ حَسَاسِيَّةٌ شَدِيدَةٌ مِنَ الأَطْعِمَةِ التَّالِيَة.",
+    foodIntro: "لَدَيَّ حَسَاسِيَّةٌ مِنَ الأَطْعِمَةِ التَّالِيَة.",
     medicineIntro: "لَدَيَّ حَسَاسِيَّةٌ مِنَ الأَدْوِيَةِ التَّالِيَة.",
+    celiacExplanation: "حَالَةٌ مَنَاعِيَّةٌ ذَاتِيَّةٌ خَطِيرَة. حَتَّى الكَمِّيَّاتُ الصَّغِيرَةُ مِنَ الغُلُوتِين أَوِ التَّلَامُسُ العَرَضِيُّ قَدْ تَجْعَلُ الطَّعَامَ غَيْرَ آمِن.",
+    celiacAvoidanceInstruction: "تَجَنَّبِ القَمْحَ وَالشَّعِيرَ وَالجَاوْدَارَ وَأَيَّ تَلَامُسٍ عَرَضِيٍّ مَعَ الغُلُوتِين.",
+    avoidCrossContact: "يُرْجَى تَجَنُّبُ هَذِهِ المُكَوِّنَاتِ وَمَنْعُ التَّلَامُسِ العَرَضِيِّ مَعَهَا.",
     foodListLabel: "الأَطْعِمَةُ الَّتِي تُسَبِّبُ لِي الحَسَاسِيَّة",
     medicineListLabel: "الأَدْوِيَةُ الَّتِي تُسَبِّبُ لِي الحَسَاسِيَّة",
     sensitivityListLabel: "أَطْعِمَةٌ يُفَضَّلُ تَجَنُّبُهَا",

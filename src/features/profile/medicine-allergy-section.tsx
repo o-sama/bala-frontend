@@ -1,15 +1,17 @@
 import { Pill, ShieldAlert } from "lucide-react"
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import type { MedicineAllergy } from "@/features/profile/profile-data"
+import { MedicineProfileDetails } from "@/features/profile/medicine-profile-details"
+import type { MedicineAllergy, PublicProfile } from "@/features/profile/profile-data"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
 interface MedicineAllergySectionProps {
   medicineAllergies: MedicineAllergy[]
+  details?: PublicProfile["medicineAllergyDetails"]
   language: SupportedLanguage
 }
 
-export function MedicineAllergySection({ medicineAllergies, language }: MedicineAllergySectionProps) {
+export function MedicineAllergySection({ medicineAllergies, language, details }: MedicineAllergySectionProps) {
   const copy = translations[language]
 
   return (
@@ -40,6 +42,7 @@ export function MedicineAllergySection({ medicineAllergies, language }: Medicine
                 <dd className="opacity-80">{copy.medicineDetails[medicineAllergy.id].alternateNames}</dd>
               </div>
             </dl>
+            <MedicineProfileDetails details={details?.[medicineAllergy.id]} language={language} />
           </div>
         ))}
         <p className="text-xs font-semibold leading-5">{copy.medicineEmergencyInstruction}</p>

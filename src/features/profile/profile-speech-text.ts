@@ -6,6 +6,8 @@ import {
   type PublicProfile,
 } from "@/features/profile/profile-data"
 import type { ProfileSection } from "@/app/use-hash-route"
+import { interactionCopy } from "@/features/profile/interaction-copy"
+import { localizeProfileText } from "@/features/profile/localized-profile-text"
 import { spokenTranslations } from "@/features/profile/spoken-translations"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
@@ -20,6 +22,7 @@ export function getProfileSpeechText(
 ) {
   const copy = translations[language]
   const spokenCopy = spokenTranslations[language]
+  const detailCopy = interactionCopy[language]
   const listSeparator = language === "ar" ? "، " : ", "
   const foods = groupSelectedFoods(profile.selectedFoodIds).flatMap((group) =>
     group.foods.map((food) => spokenCopy?.foods[food.id] ?? copy.foods[food.id]),
@@ -28,7 +31,18 @@ export function getProfileSpeechText(
     (condition) => spokenCopy?.dietaryConditions[condition.id] ?? copy.dietaryConditions[condition.id],
   )
   const medicines = getSelectedMedicineAllergies(profile.medicineAllergyIds).map(
-    (medicine) => spokenCopy?.medicines[medicine.id] ?? copy.medicines[medicine.id],
+    (medicine) => {
+      const details = profile.medicineAllergyDetails?.[medicine.id]
+      const reaction = localizeProfileText(details?.reaction, language)
+      const notes = localizeProfileText(details?.notes, language)
+      return [
+        spokenCopy?.medicines[medicine.id] ?? copy.medicines[medicine.id],
+        `${copy.drugFamily}: ${copy.medicineDetails[medicine.id].drugFamily}`,
+        `${copy.alsoKnownAs}: ${copy.medicineDetails[medicine.id].alternateNames}`,
+        reaction?.language === language ? `${detailCopy.recordedReaction}: ${reaction.text}` : "",
+        notes?.language === language ? `${detailCopy.medicineNotes}: ${notes.text}` : "",
+      ].filter(Boolean).map(asSentence).join(" ")
+    },
   )
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds).map(
     (sensitivity) => spokenCopy?.sensitivities[sensitivity.id] ?? copy.sensitivities[sensitivity.id],
@@ -41,8 +55,11 @@ export function getProfileSpeechText(
         spokenCopy?.emergencyInformation ?? copy.emergencyInformation,
         spokenCopy?.emergencyServicesInstruction ?? copy.emergencyServicesInstruction,
         emergencyInfo.carriesEpinephrine ? (spokenCopy?.carriesEpinephrine ?? copy.carriesEpinephrine) : "",
-        epinephrineLocation
+        emergencyInfo.carriesEpinephrine && epinephrineLocation
           ? `${spokenCopy?.location ?? copy.location}: ${epinephrineLocation}`
+          : "",
+        emergencyInfo.contactName || emergencyInfo.contactPhone
+          ? `${copy.emergencyContact}: ${[emergencyInfo.contactName, emergencyInfo.contactPhone?.replace(/\d/g, "$& ")].filter(Boolean).join(", ")}`
           : "",
       ].filter(Boolean).map(asSentence).join(" ")
     : ""
@@ -54,7 +71,12 @@ export function getProfileSpeechText(
       ]
     : [
         spokenCopy?.foodIntro ?? copy.staffHeading,
-        `${spokenCopy?.foodListLabel ?? copy.foodAllergies}: ${[...foods, ...conditions].join(listSeparator)}`,
+        foods.length > 0 ? `${spokenCopy?.foodListLabel ?? copy.foodAllergies}: ${foods.join(listSeparator)}` : "",
+        conditions.length > 0 ? conditions.join(listSeparator) : "",
+        conditions.length > 0 ? (spokenCopy?.celiacExplanation ?? copy.celiacExplanation) : "",
+        conditions.length > 0 ? (spokenCopy?.celiacAvoidanceInstruction ?? copy.celiacAvoidanceInstruction) : "",
+        spokenCopy?.avoidCrossContact ?? copy.avoidCrossContact,
+        copy.unlistedNotice,
         sensitivities.length > 0
           ? `${spokenCopy?.sensitivityListLabel ?? copy.sensitivitiesHeading}: ${sensitivities.join(listSeparator)}`
           : "",

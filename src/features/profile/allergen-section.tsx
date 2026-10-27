@@ -26,12 +26,12 @@ export function AllergenSection({ familyId, foods, language, emphasized }: Aller
       )}
     >
       <CardHeader className={cn("px-5 pt-5", emphasized && "px-6 pt-6")}>
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-3">
           <div className={cn("flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.1em] text-nut-ink", isLegume && "text-peanut-ink")}>
             <AlertTriangle className="size-4" />
             <span>{copy.families[familyId]}</span>
           </div>
-          <span className="whitespace-nowrap rounded-full bg-alert px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-wide text-white">
+          <span className="max-w-full rounded-full bg-alert px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-wide text-white">
             {copy.strictAvoidance}
           </span>
         </div>

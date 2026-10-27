@@ -25,8 +25,8 @@ describe("groupSelectedFoods", () => {
 })
 
 describe("detectLanguage", () => {
-  it("uses French when any preferred browser language is French", () => {
-    expect(detectLanguage(["en-CA", "fr-CA"])).toBe("fr")
+  it("respects English as the first preferred language", () => {
+    expect(detectLanguage(["en-CA", "fr-CA"])).toBe("en")
   })
 
   it.each([

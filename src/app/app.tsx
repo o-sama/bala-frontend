@@ -5,12 +5,13 @@ import { OwnerProfilePage } from "@/features/profile/owner-profile-page"
 import { demoProfile, getProfileById, type FoodId } from "@/features/profile/profile-data"
 import { PublicProfilePage } from "@/features/profile/public-profile-page"
 import { StaffViewPage } from "@/features/profile/staff-view-page"
-import { detectLanguage, translations, type SupportedLanguage } from "@/features/profile/translations"
+import { translations } from "@/features/profile/translations"
+import { useViewerLanguage } from "@/app/viewer-preferences"
 import { useHashRoute } from "@/app/use-hash-route"
 
 export function App() {
   const { route, profileId, profileSection, navigate } = useHashRoute(featureFlags.ownerSetup)
-  const [language, setLanguage] = useState<SupportedLanguage>(detectLanguage)
+  const [language, setLanguage] = useViewerLanguage()
   const baseProfile = getProfileById(profileId) ?? demoProfile
   const [profileSelections, setProfileSelections] = useState<Record<string, FoodId[]>>({})
   const selectedFoodIds = profileSelections[baseProfile.id] ?? baseProfile.selectedFoodIds

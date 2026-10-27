@@ -96,6 +96,25 @@ describe("profile priorities", () => {
     expect(onShowToStaff).toHaveBeenCalledWith("medicine")
   })
 
+  it("shows optional profile medicine details in visitor and staff views", async () => {
+    const user = userEvent.setup()
+    const { unmount } = render(
+      <PublicProfilePage profile={demoProfile} language="en" onLanguageChange={handlers.onLanguageChange} onShowToStaff={handlers.onShowToStaff} />,
+    )
+    await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
+    expect(screen.getByText("Recorded reaction")).toBeInTheDocument()
+    expect(screen.getByText("Hives and itching")).toBeInTheDocument()
+    unmount()
+    render(<StaffViewPage profile={demoProfile} language="en" section="medicine" onLanguageChange={handlers.onLanguageChange} onBack={handlers.onBack} />)
+    expect(screen.getByText("Hives and itching")).toBeInTheDocument()
+  })
+
+  it("omits optional medicine fields when not configured", () => {
+    render(<StaffViewPage profile={{ ...demoProfile, medicineAllergyDetails: undefined }} language="en" section="medicine" onLanguageChange={handlers.onLanguageChange} onBack={handlers.onBack} />)
+    expect(screen.queryByText("Recorded reaction")).not.toBeInTheDocument()
+    expect(screen.queryByText("Profile notes")).not.toBeInTheDocument()
+  })
+
   it("shows configured emergency information while allowing every PII field to be omitted", () => {
     const profileWithoutEmergencyPii = {
       ...demoProfile,
@@ -158,7 +177,7 @@ describe("profile priorities", () => {
       />,
     )
 
-    expect(screen.getByText("Last updated: Oct 22, 2026")).toBeInTheDocument()
+    expect(screen.getByText("Last updated: Oct 26, 2026")).toBeInTheDocument()
     expect(screen.queryByText(/Share with your kitchen/)).not.toBeInTheDocument()
     expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument()
     expect(screen.getByRole("note")).toHaveTextContent("Foods not listed here have not been marked as safe.")
