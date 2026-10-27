@@ -33,6 +33,7 @@ interface Copy {
   thankYou: string
   staffAllergiesHeading: string
   staffAvoidanceInstruction: string
+  strictAvoidance: string
   sensitivitiesHeading: string
   sensitivitiesStaffHeading: string
   avoidIfPossible: string
@@ -92,6 +93,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     thankYou: "Thank you for checking.",
     staffAllergiesHeading: "Allergies — strict avoidance",
     staffAvoidanceInstruction: "Avoid ingredients and cross-contact",
+    strictAvoidance: "Strict avoidance",
     sensitivitiesHeading: "Sensitivities (not allergies)",
     sensitivitiesStaffHeading: "Sensitivities — avoid if possible",
     avoidIfPossible: "Avoid if possible",
@@ -165,6 +167,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     thankYou: "Merci d’avoir vérifié.",
     staffAllergiesHeading: "Allergies — évitement strict",
     staffAvoidanceInstruction: "Éviter les ingrédients et tout contact croisé",
+    strictAvoidance: "Évitement strict",
     sensitivitiesHeading: "Sensibilités (pas des allergies)",
     sensitivitiesStaffHeading: "Sensibilités — à éviter si possible",
     avoidIfPossible: "À éviter si possible",
@@ -238,6 +241,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     thankYou: "Gracias por comprobarlo.",
     staffAllergiesHeading: "Alergias — evitación estricta",
     staffAvoidanceInstruction: "Evite los ingredientes y el contacto cruzado",
+    strictAvoidance: "Evitación estricta",
     sensitivitiesHeading: "Sensibilidades (no son alergias)",
     sensitivitiesStaffHeading: "Sensibilidades — evitar si es posible",
     avoidIfPossible: "Evitar si es posible",
@@ -311,6 +315,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     thankYou: "شكرًا لتحققكم.",
     staffAllergiesHeading: "الحساسية — تجنّب تام",
     staffAvoidanceInstruction: "تجنّب المكونات والتلامس العرضي",
+    strictAvoidance: "تجنّب تام",
     sensitivitiesHeading: "أطعمة تسبب انزعاجًا (ليست حساسية)",
     sensitivitiesStaffHeading: "أطعمة تسبب انزعاجًا — تجنّبها إن أمكن",
     avoidIfPossible: "تجنّبها إن أمكن",
@@ -384,6 +389,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
     thankYou: "Kontrol ettiğiniz için teşekkür ederim.",
     staffAllergiesHeading: "Alerjiler — kesinlikle kaçının",
     staffAvoidanceInstruction: "Malzemelerden ve çapraz temastan kaçının",
+    strictAvoidance: "Kesinlikle kaçının",
     sensitivitiesHeading: "Hassasiyetler (alerji değildir)",
     sensitivitiesStaffHeading: "Hassasiyetler — mümkünse kaçının",
     avoidIfPossible: "Mümkünse kaçının",

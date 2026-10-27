@@ -57,15 +57,6 @@ export function PublicProfilePage({
         </div>
       </section>
 
-      <CommunicationTools
-        language={language}
-        speechText={getProfileSpeechText(profile, language, visibleSection)}
-        isLargeText={isLargeText}
-        onLargeTextChange={setIsLargeText}
-      />
-
-      {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
-
       {hasMedicineTab ? (
         <Tabs
           value={visibleSection}
@@ -101,11 +92,21 @@ export function PublicProfilePage({
         <FoodProfileContent profile={profile} language={language} showEyebrow />
       )}
 
-      <Button size="lg" className="w-full justify-between" onClick={() => onShowToStaff(visibleSection)}>
-        {copy.showToStaff}
-        <ArrowUpRight className="size-5" />
-      </Button>
+      {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
 
+      <CommunicationTools
+        language={language}
+        speechText={getProfileSpeechText(profile, language, visibleSection)}
+        isLargeText={isLargeText}
+        onLargeTextChange={setIsLargeText}
+      />
+
+      <div className="sticky bottom-3 z-20 rounded-2xl bg-background/90 p-1.5 shadow-xl backdrop-blur">
+        <Button size="lg" className="w-full justify-between" onClick={() => onShowToStaff(visibleSection)}>
+          {copy.showToStaff}
+          <ArrowUpRight className="size-5" />
+        </Button>
+      </div>
     </main>
   )
 }

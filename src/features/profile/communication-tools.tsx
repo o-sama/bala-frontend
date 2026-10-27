@@ -44,24 +44,24 @@ export function CommunicationTools({
   }
 
   return (
-    <section className="grid grid-cols-2 gap-2" aria-label={copy.communicationTools}>
+    <section className="flex items-center justify-end gap-2" aria-label={copy.communicationTools}>
       <Button
         variant="outline"
-        className="h-12"
+        className="h-10 px-3 text-xs"
         onClick={toggleSpeech}
         disabled={!canSpeak}
         aria-pressed={isSpeaking}
       >
-        {isSpeaking ? <Square className="size-4" /> : <AudioLines className="size-5" />}
+        {isSpeaking ? <Square className="size-3.5" /> : <AudioLines className="size-4" />}
         {isSpeaking ? copy.stopReading : copy.readAloud}
       </Button>
       <Button
         variant="outline"
-        className="h-12"
+        className="h-10 px-3 text-xs"
         onClick={() => onLargeTextChange(!isLargeText)}
         aria-pressed={isLargeText}
       >
-        <Type className="size-5" />
+        <Type className="size-4" />
         {copy.largeText}
       </Button>
     </section>

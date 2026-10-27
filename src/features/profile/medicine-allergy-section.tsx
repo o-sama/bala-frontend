@@ -13,17 +13,19 @@ export function MedicineAllergySection({ medicineAllergies, language }: Medicine
   const copy = translations[language]
 
   return (
-    <Card className="border border-medicine-border bg-medicine-panel text-medicine-ink">
+    <Card className="overflow-hidden border border-s-4 border-border border-s-medicine-border bg-card text-foreground shadow-sm">
       <CardHeader className="gap-2 px-5 pt-5">
-        <h2 className="flex items-center gap-2 text-lg font-bold">
-          <Pill className="size-5" />
+        <h2 className="flex items-center gap-2 text-lg font-bold text-medicine-ink">
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-medicine-panel">
+            <Pill className="size-5" />
+          </span>
           {copy.medicineAllergiesHeading}
         </h2>
-        <p className="text-xs leading-5 opacity-80">{copy.medicineAllergyExplanation}</p>
+        <p className="text-xs leading-5 text-muted-foreground">{copy.medicineAllergyExplanation}</p>
       </CardHeader>
       <CardContent className="space-y-3 px-5 pb-5">
         {medicineAllergies.map((medicineAllergy) => (
-          <div key={medicineAllergy.id} className="rounded-xl bg-white/70 px-4 py-3">
+          <div key={medicineAllergy.id} className="rounded-xl bg-medicine-panel px-4 py-3 text-medicine-ink">
             <div className="flex items-center gap-3">
               <ShieldAlert className="size-6 shrink-0" />
               <span className="text-lg font-bold">{copy.medicines[medicineAllergy.id]}</span>

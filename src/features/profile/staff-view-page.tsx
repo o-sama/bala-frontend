@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ArrowLeft, TriangleAlert } from "lucide-react"
+import { ArrowLeft, Pill, TriangleAlert } from "lucide-react"
 
 import type { ProfileSection } from "@/app/use-hash-route"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,7 @@ import { getProfileSpeechText } from "@/features/profile/profile-speech-text"
 import { StaffPreparationChecklist } from "@/features/profile/staff-preparation-checklist"
 import { StaffSensitivityBoard } from "@/features/profile/staff-sensitivity-board"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
+import { cn } from "@/lib/utils"
 
 interface StaffViewPageProps {
   profile: PublicProfile
@@ -54,12 +55,17 @@ export function StaffViewPage({ profile, language, onLanguageChange, section = "
         <LanguageSelect value={language} onChange={onLanguageChange} />
       </header>
 
-      <section className="space-y-2">
-        <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-alert">
-          <TriangleAlert className="size-5" />
+      <section
+        className={cn(
+          "rounded-2xl bg-primary px-5 py-4 text-primary-foreground shadow-sm",
+          visibleSection === "medicine" && "bg-medicine-ink",
+        )}
+      >
+        <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] opacity-80">
+          {visibleSection === "medicine" ? <Pill className="size-5" /> : <TriangleAlert className="size-5" />}
           {visibleSection === "medicine" ? copy.medicalStaffEyebrow : copy.staffEyebrow}
         </p>
-        <p id="staff-heading" className="text-lg font-bold text-foreground">{profile.fullName}</p>
+        <p id="staff-heading" className="mt-2 text-xl font-bold">{profile.fullName}</p>
       </section>
 
       <CommunicationTools

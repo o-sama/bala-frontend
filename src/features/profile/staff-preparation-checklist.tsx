@@ -30,9 +30,11 @@ export function StaffPreparationChecklist({
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-primary/30 bg-primary/5" aria-labelledby="checklist-heading">
-      <header className="flex items-start gap-3 border-b border-primary/15 px-5 py-4">
-        <ClipboardCheck className="mt-0.5 size-6 shrink-0 text-primary" />
+    <section className="overflow-hidden rounded-2xl border-2 border-s-[6px] border-primary/25 border-s-primary bg-card shadow-sm" aria-labelledby="checklist-heading">
+      <header className="flex items-start gap-3 border-b border-border px-5 py-4">
+        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-muted text-primary">
+          <ClipboardCheck className="size-6" />
+        </span>
         <div>
           <h2 id="checklist-heading" className="text-xl font-bold text-foreground">{copy.staffChecklistHeading}</h2>
           <p className="text-sm leading-5 text-secondary-foreground">{copy.staffChecklistIntro}</p>

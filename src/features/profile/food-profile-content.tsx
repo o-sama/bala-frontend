@@ -25,12 +25,12 @@ export function FoodProfileContent({ profile, language, showEyebrow }: FoodProfi
 
   return (
     <div className="space-y-6">
-      <section className="space-y-3">
+      <section className="space-y-2">
         {showEyebrow && <p className="eyebrow">{copy.foodAllergies}</p>}
         <h1 id="profile-heading" className="text-3xl font-bold leading-tight tracking-tight text-foreground">
           {copy.profileHeading}
         </h1>
-        <p className="text-[0.95rem] leading-6 text-muted-foreground">{copy.profileIntro}</p>
+        <p className="text-sm leading-6 text-muted-foreground">{copy.profileIntro}</p>
       </section>
 
       <div className="space-y-4" role="group" aria-label={copy.foodAllergies}>
@@ -45,22 +45,21 @@ export function FoodProfileContent({ profile, language, showEyebrow }: FoodProfi
 
       {sensitivities.length > 0 && <SensitivitySection sensitivities={sensitivities} language={language} />}
 
-      <section className="space-y-3">
-        <h2 className="flex items-center gap-2 text-lg font-bold text-foreground">
-          <Utensils className="size-5" />
-          {copy.preparationHeading}
-        </h2>
-        <p className="leading-6 text-secondary-foreground">{copy.avoidCrossContact}</p>
-        <p className="leading-6 text-secondary-foreground">{copy.cannotAccommodate}</p>
+      <section className="overflow-hidden rounded-2xl border border-s-4 border-border border-s-primary bg-card shadow-sm">
+        <div className="space-y-2 px-5 py-4">
+          <h2 className="flex items-center gap-2 text-lg font-bold text-foreground">
+            <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-muted">
+              <Utensils className="size-5" />
+            </span>
+            {copy.preparationHeading}
+          </h2>
+          <p className="text-sm leading-6 text-secondary-foreground">{copy.avoidCrossContact} {copy.cannotAccommodate}</p>
+        </div>
+        <p role="note" className="flex gap-3 border-t border-alert/15 bg-alert/5 px-5 py-3 text-sm font-semibold leading-5 text-alert">
+          <Info className="mt-0.5 size-5 shrink-0" />
+          {copy.unlistedNotice}
+        </p>
       </section>
-
-      <p
-        role="note"
-        className="flex gap-3 rounded-xl border border-alert/25 bg-alert/5 px-4 py-3 text-sm font-semibold leading-5 text-alert"
-      >
-        <Info className="mt-0.5 size-5 shrink-0" />
-        {copy.unlistedNotice}
-      </p>
     </div>
   )
 }

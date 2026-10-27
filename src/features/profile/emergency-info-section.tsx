@@ -13,15 +13,17 @@ export function EmergencyInfoSection({ emergencyInfo, language }: EmergencyInfoS
   const hasContact = Boolean(emergencyInfo.contactName || emergencyInfo.contactPhone)
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-alert/45 bg-alert/5" aria-labelledby="emergency-heading">
-      <header className="flex items-center gap-3 border-b border-alert/20 px-5 py-4 text-alert">
-        <HeartPulse className="size-6 shrink-0" />
+    <section className="overflow-hidden rounded-2xl border border-s-4 border-border border-s-alert bg-card shadow-sm" aria-labelledby="emergency-heading">
+      <header className="flex items-center gap-3 border-b border-border px-5 py-4 text-alert">
+        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-alert/10">
+          <HeartPulse className="size-5" />
+        </span>
         <div>
           <h2 id="emergency-heading" className="text-lg font-bold">{copy.emergencyInformation}</h2>
           <p className="text-xs font-semibold">{copy.emergencyServicesInstruction}</p>
         </div>
       </header>
-      <div className="space-y-3 px-5 py-4 text-foreground">
+      <div className="grid gap-4 px-5 py-4 text-foreground sm:grid-cols-2">
         {emergencyInfo.carriesEpinephrine && (
           <div className="flex items-start gap-3">
             <Syringe className="mt-0.5 size-5 shrink-0 text-alert" />
@@ -53,7 +55,7 @@ export function EmergencyInfoSection({ emergencyInfo, language }: EmergencyInfoS
 
         {emergencyInfo.actionPlanUrl && (
           <a
-            className="flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-primary"
+            className="flex items-center gap-2 rounded-xl bg-alert/5 px-4 py-3 text-sm font-bold text-alert sm:col-span-2"
             href={emergencyInfo.actionPlanUrl}
             target="_blank"
             rel="noreferrer"

@@ -13,17 +13,19 @@ export function SensitivitySection({ sensitivities, language }: SensitivitySecti
   const copy = translations[language]
 
   return (
-    <Card className="border border-sensitivity-border bg-sensitivity-panel text-sensitivity-ink">
+    <Card className="overflow-hidden border border-s-4 border-border border-s-sensitivity-border bg-card text-foreground shadow-sm">
       <CardHeader className="gap-2 px-5 pt-5">
-        <h2 className="flex items-center gap-2 text-base font-bold">
-          <CircleCheck className="size-5" />
+        <h2 className="flex items-center gap-2 text-base font-bold text-sensitivity-ink">
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-sensitivity-panel">
+            <CircleCheck className="size-5" />
+          </span>
           {copy.sensitivitiesHeading}
         </h2>
-        <p className="text-xs leading-5 opacity-80">{copy.sensitivityExplanation}</p>
+        <p className="text-xs leading-5 text-muted-foreground">{copy.sensitivityExplanation}</p>
       </CardHeader>
       <CardContent className="px-5 pb-5">
         <p className="mb-3 text-[0.68rem] font-bold uppercase tracking-[0.11em]">{copy.avoidIfPossible}</p>
-        <div className="flex items-center gap-3 rounded-xl bg-white/65 px-4 py-3">
+        <div className="flex items-center gap-3 rounded-xl bg-sensitivity-panel px-4 py-3 text-sensitivity-ink">
           <MilkOff className="size-6 shrink-0" />
           <div className="flex flex-wrap items-baseline gap-x-2">
             {sensitivities.map((sensitivity) => (
