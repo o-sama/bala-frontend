@@ -1,6 +1,9 @@
+import { useState } from "react"
 import { ArrowLeft, TriangleAlert } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { CommunicationTools } from "@/features/profile/communication-tools"
+import { EmergencyInfoSection } from "@/features/profile/emergency-info-section"
 import { LanguageSelect } from "@/features/profile/language-select"
 import {
   getSelectedDietaryConditions,
@@ -12,6 +15,8 @@ import {
 import { StaffAllergyBoard } from "@/features/profile/staff-allergy-board"
 import { StaffDietaryConditionBoard } from "@/features/profile/staff-dietary-condition-board"
 import { StaffMedicineAllergyBoard } from "@/features/profile/staff-medicine-allergy-board"
+import { getProfileSpeechText } from "@/features/profile/profile-speech-text"
+import { StaffPreparationChecklist } from "@/features/profile/staff-preparation-checklist"
 import { StaffSensitivityBoard } from "@/features/profile/staff-sensitivity-board"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
@@ -23,6 +28,8 @@ interface StaffViewPageProps {
 }
 
 export function StaffViewPage({ profile, language, onLanguageChange, onBack }: StaffViewPageProps) {
+  const [isLargeText, setIsLargeText] = useState(false)
+  const [checkedItems, setCheckedItems] = useState<string[]>([])
   const copy = translations[language]
   const groups = groupSelectedFoods(profile.selectedFoodIds)
   const selectedFoods = groups.flatMap((group) => group.foods)
@@ -31,7 +38,11 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
 
   return (
-    <main className="phone-panel bg-warm-white space-y-6" dir={copy.direction} aria-labelledby="staff-heading">
+    <main
+      className={`phone-panel bg-warm-white space-y-6 ${isLargeText ? "large-text-mode" : ""}`}
+      dir={copy.direction}
+      aria-labelledby="staff-heading"
+    >
       <header className="flex items-center justify-between">
         <Button variant="ghost" className="-ms-3" onClick={onBack}>
           <ArrowLeft className="size-4 rtl:rotate-180" />
@@ -48,6 +59,15 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
         <p id="staff-heading" className="text-lg font-bold text-foreground">{profile.fullName}</p>
       </section>
 
+      <CommunicationTools
+        language={language}
+        speechText={getProfileSpeechText(profile, language)}
+        isLargeText={isLargeText}
+        onLargeTextChange={setIsLargeText}
+      />
+
+      {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
+
       <StaffAllergyBoard foods={selectedFoods} language={language} />
 
       {dietaryConditions.length > 0 && (
@@ -59,6 +79,12 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
       )}
 
       {sensitivities.length > 0 && <StaffSensitivityBoard sensitivities={sensitivities} language={language} />}
+
+      <StaffPreparationChecklist
+        language={language}
+        checkedItems={checkedItems}
+        onCheckedItemsChange={setCheckedItems}
+      />
 
       <p className="rounded-2xl border border-border bg-background px-5 py-4 text-lg font-bold leading-6 text-secondary-foreground">
         {copy.cannotAccommodate}

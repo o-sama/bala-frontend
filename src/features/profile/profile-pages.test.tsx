@@ -53,6 +53,60 @@ describe("profile priorities", () => {
     expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "true")
     expect(screen.getByText("Penicillin")).toBeInTheDocument()
     expect(screen.getByText("These medicine allergies are separate from food allergies.")).toBeInTheDocument()
+    expect(screen.getByText("Penicillin antibiotics")).toBeInTheDocument()
+    expect(screen.getByText("Penicillin G, penicillin V")).toBeInTheDocument()
+  })
+
+  it("shows configured emergency information while allowing every PII field to be omitted", () => {
+    const profileWithoutEmergencyPii = {
+      ...demoProfile,
+      emergencyInfo: { carriesEpinephrine: true, epinephrineLocation: "Medical bag" },
+    }
+
+    render(
+      <PublicProfilePage
+        profile={profileWithoutEmergencyPii}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={handlers.onShowToStaff}
+      />,
+    )
+
+    expect(screen.getByRole("heading", { name: "Emergency information" })).toBeInTheDocument()
+    expect(screen.getByText("Location: Medical bag")).toBeInTheDocument()
+    expect(screen.queryByText("Emergency contact")).not.toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "Open emergency care plan" })).not.toBeInTheDocument()
+  })
+
+  it("hides emergency information when it is not configured", () => {
+    render(
+      <PublicProfilePage
+        profile={taliaProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={handlers.onShowToStaff}
+      />,
+    )
+
+    expect(screen.queryByRole("heading", { name: "Emergency information" })).not.toBeInTheDocument()
+  })
+
+  it("lets a visitor enable large text", async () => {
+    const user = userEvent.setup()
+    render(
+      <PublicProfilePage
+        profile={demoProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={handlers.onShowToStaff}
+      />,
+    )
+
+    const largeTextButton = screen.getByRole("button", { name: "Large text" })
+    expect(largeTextButton).toHaveAttribute("aria-pressed", "false")
+    await user.click(largeTextButton)
+    expect(largeTextButton).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("main")).toHaveClass("large-text-mode")
   })
 
   it("keeps profile metadata at the top and emphasizes the unlisted-food notice", () => {
@@ -133,6 +187,26 @@ describe("profile priorities", () => {
     expect(screen.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Sensitivities — avoid if possible" })).toBeInTheDocument()
     expect(screen.getByText("Avoid ingredients and cross-contact")).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Safe preparation checklist" })).toBeInTheDocument()
+  })
+
+  it("gives staff an interactive preparation checklist", async () => {
+    const user = userEvent.setup()
+    render(
+      <StaffViewPage
+        profile={demoProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onBack={handlers.onBack}
+      />,
+    )
+
+    const ingredientCheck = screen.getByRole("checkbox", {
+      name: "Check every ingredient and label for the listed allergens.",
+    })
+    expect(ingredientCheck).not.toBeChecked()
+    await user.click(ingredientCheck)
+    expect(ingredientCheck).toBeChecked()
   })
 
   it("renders Arabic staff copy with right-to-left direction", () => {

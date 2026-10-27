@@ -28,6 +28,15 @@ export interface PublicProfile {
   sensitivityIds: SensitivityId[]
   medicineAllergyIds: MedicineAllergyId[]
   dietaryConditionIds: DietaryConditionId[]
+  emergencyInfo?: EmergencyInfo
+}
+
+export interface EmergencyInfo {
+  carriesEpinephrine?: boolean
+  epinephrineLocation?: string
+  contactName?: string
+  contactPhone?: string
+  actionPlanUrl?: string
 }
 
 export interface Sensitivity {
@@ -64,6 +73,12 @@ export const demoProfile: PublicProfile = {
   sensitivityIds: ["lactose"],
   medicineAllergyIds: ["penicillin"],
   dietaryConditionIds: ["celiac"],
+  emergencyInfo: {
+    carriesEpinephrine: true,
+    epinephrineLocation: "Front pocket of backpack",
+    contactName: "Jamie Morgan",
+    contactPhone: "+1 416-555-0142",
+  },
 }
 
 export const taliaProfile: PublicProfile = {

@@ -112,6 +112,20 @@ label[for] {
   text-transform: uppercase;
 }
 
+.large-text-mode p,
+.large-text-mode dd,
+.large-text-mode label,
+.large-text-mode button,
+.large-text-mode a:not([aria-label="Bala home"]) {
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.large-text-mode h2 {
+  font-size: 1.35rem;
+  line-height: 1.35;
+}
+
 @media (max-width: 420px) {
   .phone-panel {
     min-height: calc(100svh - 1rem);

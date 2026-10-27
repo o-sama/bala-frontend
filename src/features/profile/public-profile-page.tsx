@@ -1,11 +1,15 @@
+import { useState } from "react"
 import { ArrowUpRight, Pill, ShieldAlert } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AppHeader } from "@/features/profile/app-header"
+import { CommunicationTools } from "@/features/profile/communication-tools"
+import { EmergencyInfoSection } from "@/features/profile/emergency-info-section"
 import { FoodProfileContent } from "@/features/profile/food-profile-content"
 import { MedicineAllergySection } from "@/features/profile/medicine-allergy-section"
 import { getSelectedMedicineAllergies, type PublicProfile } from "@/features/profile/profile-data"
+import { getProfileSpeechText } from "@/features/profile/profile-speech-text"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
 interface PublicProfilePageProps {
@@ -16,6 +20,7 @@ interface PublicProfilePageProps {
 }
 
 export function PublicProfilePage({ profile, language, onLanguageChange, onShowToStaff }: PublicProfilePageProps) {
+  const [isLargeText, setIsLargeText] = useState(false)
   const copy = translations[language]
   const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
   const hasMedicineTab = medicineAllergies.length > 0
@@ -24,7 +29,11 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
   )
 
   return (
-    <main className="phone-panel space-y-6" dir={copy.direction} aria-label={copy.allergyProfile}>
+    <main
+      className={`phone-panel space-y-6 ${isLargeText ? "large-text-mode" : ""}`}
+      dir={copy.direction}
+      aria-label={copy.allergyProfile}
+    >
       <AppHeader language={language} onLanguageChange={onLanguageChange} homeHref={`#/p/${profile.id}`} />
 
       <section className="flex items-center gap-3" aria-label="Profile owner">
@@ -36,6 +45,15 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
           <p className="text-xs text-muted-foreground">{copy.lastUpdated}: {date}</p>
         </div>
       </section>
+
+      <CommunicationTools
+        language={language}
+        speechText={getProfileSpeechText(profile, language)}
+        isLargeText={isLargeText}
+        onLargeTextChange={setIsLargeText}
+      />
+
+      {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
 
       {hasMedicineTab ? (
         <Tabs defaultValue="food">

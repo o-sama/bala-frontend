@@ -38,6 +38,22 @@ interface Copy {
   medicineAllergiesStaffHeading: string
   medicineAllergyExplanation: string
   medicineEmergencyInstruction: string
+  drugFamily: string
+  alsoKnownAs: string
+  medicineDetails: Record<MedicineAllergyId, { drugFamily: string; alternateNames: string }>
+  communicationTools: string
+  readAloud: string
+  stopReading: string
+  largeText: string
+  emergencyInformation: string
+  emergencyServicesInstruction: string
+  carriesEpinephrine: string
+  location: string
+  emergencyContact: string
+  openEmergencyPlan: string
+  staffChecklistHeading: string
+  staffChecklistIntro: string
+  staffChecklistItems: Record<"ingredients" | "equipment" | "crossContact" | "finalCheck", string>
   strictlyGlutenFree: string
   celiacStaffHeading: string
   celiacExplanation: string
@@ -78,6 +94,27 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "Medicine allergy — do not administer",
     medicineAllergyExplanation: "These medicine allergies are separate from food allergies.",
     medicineEmergencyInstruction: "Tell medical personnel in an emergency.",
+    drugFamily: "Drug family",
+    alsoKnownAs: "Also recorded as",
+    medicineDetails: { penicillin: { drugFamily: "Penicillin antibiotics", alternateNames: "Penicillin G, penicillin V" } },
+    communicationTools: "Communication tools",
+    readAloud: "Read aloud",
+    stopReading: "Stop reading",
+    largeText: "Large text",
+    emergencyInformation: "Emergency information",
+    emergencyServicesInstruction: "Call local emergency services first in an emergency.",
+    carriesEpinephrine: "Carries epinephrine",
+    location: "Location",
+    emergencyContact: "Emergency contact",
+    openEmergencyPlan: "Open emergency care plan",
+    staffChecklistHeading: "Safe preparation checklist",
+    staffChecklistIntro: "Please complete each step before serving.",
+    staffChecklistItems: {
+      ingredients: "Check every ingredient and label for the listed allergens.",
+      equipment: "Use clean gloves, utensils, cookware, and preparation surfaces.",
+      crossContact: "Keep the meal away from shared fryers, grills, toasters, and serving utensils.",
+      finalCheck: "Confirm the finished meal and garnishes before serving.",
+    },
     strictlyGlutenFree: "Strictly gluten-free",
     celiacStaffHeading: "Celiac disease — strict gluten-free",
     celiacExplanation: "Serious autoimmune condition. Even small amounts of gluten or cross-contact can make food unsafe.",
@@ -127,6 +164,27 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "Allergie médicamenteuse — ne pas administrer",
     medicineAllergyExplanation: "Ces allergies médicamenteuses sont distinctes des allergies alimentaires.",
     medicineEmergencyInstruction: "À signaler au personnel médical en cas d’urgence.",
+    drugFamily: "Famille de médicaments",
+    alsoKnownAs: "Aussi indiqué comme",
+    medicineDetails: { penicillin: { drugFamily: "Antibiotiques pénicillines", alternateNames: "Pénicilline G, pénicilline V" } },
+    communicationTools: "Outils de communication",
+    readAloud: "Lire à voix haute",
+    stopReading: "Arrêter la lecture",
+    largeText: "Grand texte",
+    emergencyInformation: "Renseignements d’urgence",
+    emergencyServicesInstruction: "En cas d’urgence, appelez d’abord les services d’urgence locaux.",
+    carriesEpinephrine: "Porte de l’épinéphrine",
+    location: "Emplacement",
+    emergencyContact: "Personne à contacter en cas d’urgence",
+    openEmergencyPlan: "Ouvrir le plan de soins d’urgence",
+    staffChecklistHeading: "Liste de préparation sécuritaire",
+    staffChecklistIntro: "Veuillez effectuer chaque étape avant de servir.",
+    staffChecklistItems: {
+      ingredients: "Vérifier chaque ingrédient et chaque étiquette pour les allergènes indiqués.",
+      equipment: "Utiliser des gants, ustensiles, récipients et surfaces de préparation propres.",
+      crossContact: "Éloigner le repas des friteuses, grils, grille-pain et ustensiles de service partagés.",
+      finalCheck: "Vérifier le repas terminé et les garnitures avant de servir.",
+    },
     strictlyGlutenFree: "Strictement sans gluten",
     celiacStaffHeading: "Maladie cœliaque — sans gluten strict",
     celiacExplanation: "Maladie auto-immune grave. Même de petites quantités de gluten ou un contact croisé peuvent rendre un aliment dangereux.",
@@ -176,6 +234,27 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "Alergia a medicamentos — no administrar",
     medicineAllergyExplanation: "Estas alergias a medicamentos son distintas de las alergias alimentarias.",
     medicineEmergencyInstruction: "Informe al personal médico en caso de emergencia.",
+    drugFamily: "Familia del medicamento",
+    alsoKnownAs: "También registrado como",
+    medicineDetails: { penicillin: { drugFamily: "Antibióticos de penicilina", alternateNames: "Penicilina G, penicilina V" } },
+    communicationTools: "Herramientas de comunicación",
+    readAloud: "Leer en voz alta",
+    stopReading: "Detener lectura",
+    largeText: "Texto grande",
+    emergencyInformation: "Información de emergencia",
+    emergencyServicesInstruction: "En una emergencia, llame primero a los servicios de emergencia locales.",
+    carriesEpinephrine: "Lleva epinefrina",
+    location: "Ubicación",
+    emergencyContact: "Contacto de emergencia",
+    openEmergencyPlan: "Abrir el plan de atención de emergencia",
+    staffChecklistHeading: "Lista de preparación segura",
+    staffChecklistIntro: "Complete cada paso antes de servir.",
+    staffChecklistItems: {
+      ingredients: "Revise cada ingrediente y etiqueta para detectar los alérgenos indicados.",
+      equipment: "Use guantes, utensilios, recipientes y superficies de preparación limpios.",
+      crossContact: "Mantenga la comida alejada de freidoras, parrillas, tostadoras y utensilios compartidos.",
+      finalCheck: "Confirme la comida terminada y sus guarniciones antes de servir.",
+    },
     strictlyGlutenFree: "Estrictamente sin gluten",
     celiacStaffHeading: "Enfermedad celíaca — sin gluten estricto",
     celiacExplanation: "Enfermedad autoinmune grave. Incluso pequeñas cantidades de gluten o el contacto cruzado pueden hacer que un alimento no sea seguro.",
@@ -225,6 +304,27 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "حساسية دوائية — يُمنع إعطاؤه",
     medicineAllergyExplanation: "حساسية الأدوية منفصلة عن حساسية الطعام.",
     medicineEmergencyInstruction: "يُرجى إبلاغ الطاقم الطبي في حالة الطوارئ.",
+    drugFamily: "فئة الدواء",
+    alsoKnownAs: "مسجل أيضًا باسم",
+    medicineDetails: { penicillin: { drugFamily: "مضادات البنسلين الحيوية", alternateNames: "بنسلين G، بنسلين V" } },
+    communicationTools: "أدوات التواصل",
+    readAloud: "قراءة بصوت عالٍ",
+    stopReading: "إيقاف القراءة",
+    largeText: "نص كبير",
+    emergencyInformation: "معلومات الطوارئ",
+    emergencyServicesInstruction: "اتصل بخدمات الطوارئ المحلية أولاً في حالة الطوارئ.",
+    carriesEpinephrine: "يحمل الإبينفرين",
+    location: "المكان",
+    emergencyContact: "جهة اتصال الطوارئ",
+    openEmergencyPlan: "فتح خطة رعاية الطوارئ",
+    staffChecklistHeading: "قائمة التحقق من التحضير الآمن",
+    staffChecklistIntro: "يرجى إكمال كل خطوة قبل التقديم.",
+    staffChecklistItems: {
+      ingredients: "تحقق من كل مكوّن وملصق بحثًا عن مسببات الحساسية المذكورة.",
+      equipment: "استخدم قفازات وأدوات وأواني وأسطح تحضير نظيفة.",
+      crossContact: "أبعد الوجبة عن المقالي والشوايات والمحامص وأدوات التقديم المشتركة.",
+      finalCheck: "تحقق من الوجبة النهائية والإضافات قبل التقديم.",
+    },
     strictlyGlutenFree: "خالٍ تمامًا من الغلوتين",
     celiacStaffHeading: "الداء البطني — خالٍ تمامًا من الغلوتين",
     celiacExplanation: "حالة مناعية ذاتية خطيرة. حتى الكميات الصغيرة من الغلوتين أو التلامس العرضي قد تجعل الطعام غير آمن.",
@@ -274,6 +374,27 @@ export const translations: Record<SupportedLanguage, Copy> = {
     medicineAllergiesStaffHeading: "İlaç alerjisi — uygulamayın",
     medicineAllergyExplanation: "Bu ilaç alerjileri gıda alerjilerinden ayrıdır.",
     medicineEmergencyInstruction: "Acil durumda sağlık personeline bildirin.",
+    drugFamily: "İlaç ailesi",
+    alsoKnownAs: "Diğer kayıtlı adları",
+    medicineDetails: { penicillin: { drugFamily: "Penisilin antibiyotikleri", alternateNames: "Penisilin G, penisilin V" } },
+    communicationTools: "İletişim araçları",
+    readAloud: "Sesli oku",
+    stopReading: "Okumayı durdur",
+    largeText: "Büyük metin",
+    emergencyInformation: "Acil durum bilgileri",
+    emergencyServicesInstruction: "Acil durumda önce yerel acil servisleri arayın.",
+    carriesEpinephrine: "Epinefrin taşıyor",
+    location: "Konum",
+    emergencyContact: "Acil durum kişisi",
+    openEmergencyPlan: "Acil bakım planını aç",
+    staffChecklistHeading: "Güvenli hazırlık kontrol listesi",
+    staffChecklistIntro: "Servisten önce her adımı tamamlayın.",
+    staffChecklistItems: {
+      ingredients: "Listelenen alerjenler için her malzemeyi ve etiketi kontrol edin.",
+      equipment: "Temiz eldiven, gereç, pişirme kabı ve hazırlık yüzeyi kullanın.",
+      crossContact: "Yemeği ortak fritöz, ızgara, ekmek kızartma makinesi ve servis gereçlerinden uzak tutun.",
+      finalCheck: "Servisten önce bitmiş yemeği ve garnitürleri kontrol edin.",
+    },
     strictlyGlutenFree: "Kesinlikle glütensiz",
     celiacStaffHeading: "Çölyak hastalığı — kesinlikle glütensiz",
     celiacExplanation: "Ciddi bir otoimmün hastalıktır. Az miktarda glüten veya çapraz temas bile yiyeceği güvensiz hâle getirebilir.",

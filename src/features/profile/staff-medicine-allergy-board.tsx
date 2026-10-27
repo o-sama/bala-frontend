@@ -24,9 +24,21 @@ export function StaffMedicineAllergyBoard({ medicineAllergies, language }: Staff
       </header>
       <div className="space-y-2 px-5 py-4">
         {medicineAllergies.map((medicineAllergy) => (
-          <div key={medicineAllergy.id} className="flex items-center gap-3 rounded-xl bg-white/75 px-4 py-3">
-            <ShieldAlert className="size-6 shrink-0" />
-            <span className="text-xl font-bold">{copy.medicines[medicineAllergy.id]}</span>
+          <div key={medicineAllergy.id} className="rounded-xl bg-white/75 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <ShieldAlert className="size-6 shrink-0" />
+              <span className="text-xl font-bold">{copy.medicines[medicineAllergy.id]}</span>
+            </div>
+            <dl className="mt-3 grid gap-2 border-t border-medicine-border/40 pt-3 text-sm">
+              <div>
+                <dt className="font-bold">{copy.drugFamily}</dt>
+                <dd>{copy.medicineDetails[medicineAllergy.id].drugFamily}</dd>
+              </div>
+              <div>
+                <dt className="font-bold">{copy.alsoKnownAs}</dt>
+                <dd>{copy.medicineDetails[medicineAllergy.id].alternateNames}</dd>
+              </div>
+            </dl>
           </div>
         ))}
         <p className="pt-1 text-sm font-semibold leading-5">{copy.medicineEmergencyInstruction}</p>

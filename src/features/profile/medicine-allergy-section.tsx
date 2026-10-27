@@ -23,9 +23,21 @@ export function MedicineAllergySection({ medicineAllergies, language }: Medicine
       </CardHeader>
       <CardContent className="space-y-3 px-5 pb-5">
         {medicineAllergies.map((medicineAllergy) => (
-          <div key={medicineAllergy.id} className="flex items-center gap-3 rounded-xl bg-white/70 px-4 py-3">
-            <ShieldAlert className="size-6 shrink-0" />
-            <span className="text-lg font-bold">{copy.medicines[medicineAllergy.id]}</span>
+          <div key={medicineAllergy.id} className="rounded-xl bg-white/70 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <ShieldAlert className="size-6 shrink-0" />
+              <span className="text-lg font-bold">{copy.medicines[medicineAllergy.id]}</span>
+            </div>
+            <dl className="mt-3 grid gap-2 border-t border-medicine-border/40 pt-3 text-sm">
+              <div>
+                <dt className="font-bold">{copy.drugFamily}</dt>
+                <dd className="opacity-80">{copy.medicineDetails[medicineAllergy.id].drugFamily}</dd>
+              </div>
+              <div>
+                <dt className="font-bold">{copy.alsoKnownAs}</dt>
+                <dd className="opacity-80">{copy.medicineDetails[medicineAllergy.id].alternateNames}</dd>
+              </div>
+            </dl>
           </div>
         ))}
         <p className="text-xs font-semibold leading-5">{copy.medicineEmergencyInstruction}</p>
