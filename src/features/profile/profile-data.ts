@@ -78,6 +78,7 @@ export const demoProfile: PublicProfile = {
     epinephrineLocation: "Front pocket of backpack",
     contactName: "Jamie Morgan",
     contactPhone: "+1 416-555-0142",
+    actionPlanUrl: "./alex-demo-emergency-plan.html",
   },
 }
 

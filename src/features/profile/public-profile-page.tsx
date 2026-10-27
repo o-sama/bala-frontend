@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ArrowUpRight, Pill, ShieldAlert } from "lucide-react"
 
+import type { ProfileSection } from "@/app/use-hash-route"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AppHeader } from "@/features/profile/app-header"
@@ -16,14 +17,24 @@ interface PublicProfilePageProps {
   profile: PublicProfile
   language: SupportedLanguage
   onLanguageChange: (language: SupportedLanguage) => void
-  onShowToStaff: () => void
+  activeSection: ProfileSection
+  onActiveSectionChange: (section: ProfileSection) => void
+  onShowToStaff: (section: ProfileSection) => void
 }
 
-export function PublicProfilePage({ profile, language, onLanguageChange, onShowToStaff }: PublicProfilePageProps) {
+export function PublicProfilePage({
+  profile,
+  language,
+  onLanguageChange,
+  activeSection,
+  onActiveSectionChange,
+  onShowToStaff,
+}: PublicProfilePageProps) {
   const [isLargeText, setIsLargeText] = useState(false)
   const copy = translations[language]
   const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
   const hasMedicineTab = medicineAllergies.length > 0
+  const visibleSection = hasMedicineTab ? activeSection : "food"
   const date = new Intl.DateTimeFormat(copy.locale, { dateStyle: "medium" }).format(
     new Date(`${profile.updatedAt}T12:00:00`),
   )
@@ -48,7 +59,7 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
 
       <CommunicationTools
         language={language}
-        speechText={getProfileSpeechText(profile, language)}
+        speechText={getProfileSpeechText(profile, language, visibleSection)}
         isLargeText={isLargeText}
         onLargeTextChange={setIsLargeText}
       />
@@ -56,7 +67,13 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
       {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
 
       {hasMedicineTab ? (
-        <Tabs defaultValue="food">
+        <Tabs
+          value={visibleSection}
+          onValueChange={(value) => {
+            const section = value as ProfileSection
+            onActiveSectionChange(section)
+          }}
+        >
           <TabsList aria-label={copy.allergyProfile}>
             <TabsTrigger
               value="food"
@@ -84,7 +101,7 @@ export function PublicProfilePage({ profile, language, onLanguageChange, onShowT
         <FoodProfileContent profile={profile} language={language} showEyebrow />
       )}
 
-      <Button size="lg" className="w-full justify-between" onClick={onShowToStaff}>
+      <Button size="lg" className="w-full justify-between" onClick={() => onShowToStaff(visibleSection)}>
         {copy.showToStaff}
         <ArrowUpRight className="size-5" />
       </Button>

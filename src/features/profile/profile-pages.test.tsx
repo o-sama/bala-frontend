@@ -1,15 +1,32 @@
+import { useState, type ComponentProps } from "react"
 import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
 import { demoProfile, taliaProfile } from "@/features/profile/profile-data"
-import { PublicProfilePage } from "@/features/profile/public-profile-page"
+import { PublicProfilePage as BasePublicProfilePage } from "@/features/profile/public-profile-page"
 import { StaffViewPage } from "@/features/profile/staff-view-page"
 
 const handlers = {
   onLanguageChange: vi.fn(),
   onShowToStaff: vi.fn(),
   onBack: vi.fn(),
+}
+
+type TestPublicProfilePageProps = Omit<
+  ComponentProps<typeof BasePublicProfilePage>,
+  "activeSection" | "onActiveSectionChange"
+>
+
+function PublicProfilePage(props: TestPublicProfilePageProps) {
+  const [activeSection, setActiveSection] = useState<"food" | "medicine">("food")
+  return (
+    <BasePublicProfilePage
+      {...props}
+      activeSection={activeSection}
+      onActiveSectionChange={setActiveSection}
+    />
+  )
 }
 
 describe("profile priorities", () => {
@@ -55,6 +72,28 @@ describe("profile priorities", () => {
     expect(screen.getByText("These medicine allergies are separate from food allergies.")).toBeInTheDocument()
     expect(screen.getByText("Penicillin antibiotics")).toBeInTheDocument()
     expect(screen.getByText("Penicillin G, penicillin V")).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: "Open emergency care plan" })).toHaveAttribute(
+      "href",
+      "./alex-demo-emergency-plan.html",
+    )
+  })
+
+  it("opens staff mode for the currently selected visitor tab", async () => {
+    const user = userEvent.setup()
+    const onShowToStaff = vi.fn()
+    render(
+      <PublicProfilePage
+        profile={demoProfile}
+        language="en"
+        onLanguageChange={handlers.onLanguageChange}
+        onShowToStaff={onShowToStaff}
+      />,
+    )
+
+    await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
+    await user.click(screen.getByRole("button", { name: "Show to staff" }))
+
+    expect(onShowToStaff).toHaveBeenCalledWith("medicine")
   })
 
   it("shows configured emergency information while allowing every PII field to be omitted", () => {
@@ -172,7 +211,7 @@ describe("profile priorities", () => {
     expect(screen.queryByRole("heading", { name: "Sensitivities (not allergies)" })).not.toBeInTheDocument()
   })
 
-  it("gives staff separate food, medicine, and sensitivity areas", () => {
+  it("shows only food-related information and the preparation checklist in food staff mode", () => {
     render(
       <StaffViewPage
         profile={demoProfile}
@@ -184,10 +223,30 @@ describe("profile priorities", () => {
 
     expect(screen.getByRole("heading", { name: "Allergies — strict avoidance" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Celiac disease — strict gluten-free" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Medicine allergy — do not administer" })).not.toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Sensitivities — avoid if possible" })).toBeInTheDocument()
     expect(screen.getByText("Avoid ingredients and cross-contact")).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Safe preparation checklist" })).toBeInTheDocument()
+  })
+
+  it("shows only medicine information in medicine staff mode", () => {
+    render(
+      <StaffViewPage
+        profile={demoProfile}
+        language="en"
+        section="medicine"
+        onLanguageChange={handlers.onLanguageChange}
+        onBack={handlers.onBack}
+      />,
+    )
+
+    expect(screen.getByText("Please show medical personnel")).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Allergies — strict avoidance" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Celiac disease — strict gluten-free" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Safe preparation checklist" })).not.toBeInTheDocument()
+    expect(screen.getByText("Do not administer the listed medicine. Confirm a safe alternative with qualified medical personnel.")).toBeInTheDocument()
+    expect(screen.queryByText("Tell me if my meal cannot be prepared to meet these needs.")).not.toBeInTheDocument()
   })
 
   it("gives staff an interactive preparation checklist", async () => {

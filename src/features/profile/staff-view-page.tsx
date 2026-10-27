@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ArrowLeft, TriangleAlert } from "lucide-react"
 
+import type { ProfileSection } from "@/app/use-hash-route"
 import { Button } from "@/components/ui/button"
 import { CommunicationTools } from "@/features/profile/communication-tools"
 import { EmergencyInfoSection } from "@/features/profile/emergency-info-section"
@@ -24,10 +25,11 @@ interface StaffViewPageProps {
   profile: PublicProfile
   language: SupportedLanguage
   onLanguageChange: (language: SupportedLanguage) => void
+  section?: ProfileSection
   onBack: () => void
 }
 
-export function StaffViewPage({ profile, language, onLanguageChange, onBack }: StaffViewPageProps) {
+export function StaffViewPage({ profile, language, onLanguageChange, section = "food", onBack }: StaffViewPageProps) {
   const [isLargeText, setIsLargeText] = useState(false)
   const [checkedItems, setCheckedItems] = useState<string[]>([])
   const copy = translations[language]
@@ -36,6 +38,7 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
   const dietaryConditions = getSelectedDietaryConditions(profile.dietaryConditionIds)
   const medicineAllergies = getSelectedMedicineAllergies(profile.medicineAllergyIds)
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds)
+  const visibleSection = section === "medicine" && medicineAllergies.length > 0 ? "medicine" : "food"
 
   return (
     <main
@@ -54,40 +57,44 @@ export function StaffViewPage({ profile, language, onLanguageChange, onBack }: S
       <section className="space-y-2">
         <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-alert">
           <TriangleAlert className="size-5" />
-          {copy.staffEyebrow}
+          {visibleSection === "medicine" ? copy.medicalStaffEyebrow : copy.staffEyebrow}
         </p>
         <p id="staff-heading" className="text-lg font-bold text-foreground">{profile.fullName}</p>
       </section>
 
       <CommunicationTools
         language={language}
-        speechText={getProfileSpeechText(profile, language)}
+        speechText={getProfileSpeechText(profile, language, visibleSection)}
         isLargeText={isLargeText}
         onLargeTextChange={setIsLargeText}
       />
 
       {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
 
-      <StaffAllergyBoard foods={selectedFoods} language={language} />
+      {visibleSection === "food" && <StaffAllergyBoard foods={selectedFoods} language={language} />}
 
-      {dietaryConditions.length > 0 && (
+      {visibleSection === "food" && dietaryConditions.length > 0 && (
         <StaffDietaryConditionBoard dietaryConditions={dietaryConditions} language={language} />
       )}
 
-      {medicineAllergies.length > 0 && (
+      {visibleSection === "medicine" && (
         <StaffMedicineAllergyBoard medicineAllergies={medicineAllergies} language={language} />
       )}
 
-      {sensitivities.length > 0 && <StaffSensitivityBoard sensitivities={sensitivities} language={language} />}
+      {visibleSection === "food" && sensitivities.length > 0 && (
+        <StaffSensitivityBoard sensitivities={sensitivities} language={language} />
+      )}
 
-      <StaffPreparationChecklist
-        language={language}
-        checkedItems={checkedItems}
-        onCheckedItemsChange={setCheckedItems}
-      />
+      {visibleSection === "food" && (
+        <StaffPreparationChecklist
+          language={language}
+          checkedItems={checkedItems}
+          onCheckedItemsChange={setCheckedItems}
+        />
+      )}
 
       <p className="rounded-2xl border border-border bg-background px-5 py-4 text-lg font-bold leading-6 text-secondary-foreground">
-        {copy.cannotAccommodate}
+        {visibleSection === "medicine" ? copy.medicineAlternativeInstruction : copy.cannotAccommodate}
       </p>
 
       <footer className="flex items-center justify-between border-t border-border pt-6 font-bold text-foreground">

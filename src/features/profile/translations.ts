@@ -26,6 +26,9 @@ interface Copy {
   lastUpdated: string
   staffEyebrow: string
   staffHeading: string
+  medicalStaffEyebrow: string
+  medicineStaffIntro: string
+  medicineAlternativeInstruction: string
   back: string
   thankYou: string
   staffAllergiesHeading: string
@@ -82,6 +85,9 @@ export const translations: Record<SupportedLanguage, Copy> = {
     lastUpdated: "Last updated",
     staffEyebrow: "Please show the kitchen",
     staffHeading: "I am allergic to these foods.",
+    medicalStaffEyebrow: "Please show medical personnel",
+    medicineStaffIntro: "I am allergic to these medicines.",
+    medicineAlternativeInstruction: "Do not administer the listed medicine. Confirm a safe alternative with qualified medical personnel.",
     back: "Back",
     thankYou: "Thank you for checking.",
     staffAllergiesHeading: "Allergies — strict avoidance",
@@ -152,6 +158,9 @@ export const translations: Record<SupportedLanguage, Copy> = {
     lastUpdated: "Dernière mise à jour",
     staffEyebrow: "Veuillez montrer à la cuisine",
     staffHeading: "Je suis allergique à ces aliments.",
+    medicalStaffEyebrow: "Veuillez montrer au personnel médical",
+    medicineStaffIntro: "Je suis allergique à ces médicaments.",
+    medicineAlternativeInstruction: "Ne pas administrer le médicament indiqué. Confirmer une solution sûre avec du personnel médical qualifié.",
     back: "Retour",
     thankYou: "Merci d’avoir vérifié.",
     staffAllergiesHeading: "Allergies — évitement strict",
@@ -222,6 +231,9 @@ export const translations: Record<SupportedLanguage, Copy> = {
     lastUpdated: "Última actualización",
     staffEyebrow: "Muestre esto a la cocina",
     staffHeading: "Soy alérgico a estos alimentos.",
+    medicalStaffEyebrow: "Muestre esto al personal médico",
+    medicineStaffIntro: "Soy alérgico a estos medicamentos.",
+    medicineAlternativeInstruction: "No administre el medicamento indicado. Confirme una alternativa segura con personal médico cualificado.",
     back: "Volver",
     thankYou: "Gracias por comprobarlo.",
     staffAllergiesHeading: "Alergias — evitación estricta",
@@ -292,6 +304,9 @@ export const translations: Record<SupportedLanguage, Copy> = {
     lastUpdated: "آخر تحديث",
     staffEyebrow: "يرجى عرضه على المطبخ",
     staffHeading: "لدي حساسية تجاه هذه الأطعمة.",
+    medicalStaffEyebrow: "يرجى عرضه على الطاقم الطبي",
+    medicineStaffIntro: "لدي حساسية تجاه هذه الأدوية.",
+    medicineAlternativeInstruction: "لا تُعطِ الدواء المذكور. تأكد من بديل آمن مع طاقم طبي مؤهل.",
     back: "رجوع",
     thankYou: "شكرًا لتحققكم.",
     staffAllergiesHeading: "الحساسية — تجنّب تام",
@@ -362,6 +377,9 @@ export const translations: Record<SupportedLanguage, Copy> = {
     lastUpdated: "Son güncelleme",
     staffEyebrow: "Lütfen mutfağa gösterin",
     staffHeading: "Bu yiyeceklere alerjim var.",
+    medicalStaffEyebrow: "Lütfen sağlık personeline gösterin",
+    medicineStaffIntro: "Bu ilaçlara alerjim var.",
+    medicineAlternativeInstruction: "Listelenen ilacı uygulamayın. Güvenli bir alternatifi yetkili sağlık personeliyle doğrulayın.",
     back: "Geri",
     thankYou: "Kontrol ettiğiniz için teşekkür ederim.",
     staffAllergiesHeading: "Alerjiler — kesinlikle kaçının",

@@ -9,7 +9,7 @@ import { detectLanguage, translations, type SupportedLanguage } from "@/features
 import { useHashRoute } from "@/app/use-hash-route"
 
 export function App() {
-  const { route, profileId, navigate } = useHashRoute(featureFlags.ownerSetup)
+  const { route, profileId, profileSection, navigate } = useHashRoute(featureFlags.ownerSetup)
   const [language, setLanguage] = useState<SupportedLanguage>(detectLanguage)
   const baseProfile = getProfileById(profileId) ?? demoProfile
   const [profileSelections, setProfileSelections] = useState<Record<string, FoodId[]>>({})
@@ -28,7 +28,9 @@ export function App() {
           profile={profile}
           language={language}
           onLanguageChange={setLanguage}
-          onShowToStaff={() => navigate("staff")}
+          activeSection={profileSection}
+          onActiveSectionChange={(section) => navigate("profile", section)}
+          onShowToStaff={(section) => navigate("staff", section)}
         />
       )}
       {route === "staff" && (
@@ -36,7 +38,8 @@ export function App() {
           profile={profile}
           language={language}
           onLanguageChange={setLanguage}
-          onBack={() => navigate("profile")}
+          section={profileSection}
+          onBack={() => navigate("profile", profileSection)}
         />
       )}
       {featureFlags.ownerSetup && route === "owner" && (
