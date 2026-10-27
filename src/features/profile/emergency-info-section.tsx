@@ -11,6 +11,8 @@ interface EmergencyInfoSectionProps {
 export function EmergencyInfoSection({ emergencyInfo, language }: EmergencyInfoSectionProps) {
   const copy = translations[language]
   const hasContact = Boolean(emergencyInfo.contactName || emergencyInfo.contactPhone)
+  const epinephrineLocation =
+    emergencyInfo.epinephrineLocationTranslations?.[language] ?? emergencyInfo.epinephrineLocation
 
   return (
     <section className="overflow-hidden rounded-2xl border border-s-4 border-border border-s-alert bg-card shadow-sm" aria-labelledby="emergency-heading">
@@ -29,9 +31,9 @@ export function EmergencyInfoSection({ emergencyInfo, language }: EmergencyInfoS
             <Syringe className="mt-0.5 size-5 shrink-0 text-alert" />
             <div>
               <p className="font-bold">{copy.carriesEpinephrine}</p>
-              {emergencyInfo.epinephrineLocation && (
+              {epinephrineLocation && (
                 <p className="text-sm text-secondary-foreground">
-                  {copy.location}: {emergencyInfo.epinephrineLocation}
+                  {copy.location}: {epinephrineLocation}
                 </p>
               )}
             </div>

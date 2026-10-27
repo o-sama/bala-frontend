@@ -6,7 +6,12 @@ import {
   type PublicProfile,
 } from "@/features/profile/profile-data"
 import type { ProfileSection } from "@/app/use-hash-route"
+import { spokenTranslations } from "@/features/profile/spoken-translations"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
+
+function asSentence(text: string) {
+  return /[.!?؟]$/.test(text.trim()) ? text.trim() : `${text.trim()}.`
+}
 
 export function getProfileSpeechText(
   profile: PublicProfile,
@@ -14,41 +19,52 @@ export function getProfileSpeechText(
   section: ProfileSection = "food",
 ) {
   const copy = translations[language]
+  const spokenCopy = spokenTranslations[language]
+  const listSeparator = language === "ar" ? "، " : ", "
   const foods = groupSelectedFoods(profile.selectedFoodIds).flatMap((group) =>
-    group.foods.map((food) => copy.foods[food.id]),
+    group.foods.map((food) => spokenCopy?.foods[food.id] ?? copy.foods[food.id]),
   )
   const conditions = getSelectedDietaryConditions(profile.dietaryConditionIds).map(
-    (condition) => copy.dietaryConditions[condition.id],
+    (condition) => spokenCopy?.dietaryConditions[condition.id] ?? copy.dietaryConditions[condition.id],
   )
   const medicines = getSelectedMedicineAllergies(profile.medicineAllergyIds).map(
-    (medicine) => copy.medicines[medicine.id],
+    (medicine) => spokenCopy?.medicines[medicine.id] ?? copy.medicines[medicine.id],
   )
   const sensitivities = getSelectedSensitivities(profile.sensitivityIds).map(
-    (sensitivity) => copy.sensitivities[sensitivity.id],
+    (sensitivity) => spokenCopy?.sensitivities[sensitivity.id] ?? copy.sensitivities[sensitivity.id],
   )
   const emergencyInfo = profile.emergencyInfo
+  const epinephrineLocation =
+    emergencyInfo?.epinephrineLocationTranslations?.[language] ?? emergencyInfo?.epinephrineLocation
   const emergencySummary = emergencyInfo
     ? [
-        copy.emergencyInformation,
-        copy.emergencyServicesInstruction,
-        emergencyInfo.carriesEpinephrine ? copy.carriesEpinephrine : "",
-        emergencyInfo.epinephrineLocation
-          ? `${copy.location}: ${emergencyInfo.epinephrineLocation}.`
+        spokenCopy?.emergencyInformation ?? copy.emergencyInformation,
+        spokenCopy?.emergencyServicesInstruction ?? copy.emergencyServicesInstruction,
+        emergencyInfo.carriesEpinephrine ? (spokenCopy?.carriesEpinephrine ?? copy.carriesEpinephrine) : "",
+        epinephrineLocation
+          ? `${spokenCopy?.location ?? copy.location}: ${epinephrineLocation}`
           : "",
-      ].filter(Boolean).join(". ")
+      ].filter(Boolean).map(asSentence).join(" ")
     : ""
 
   const sectionSummary = section === "medicine"
-    ? [copy.medicineStaffIntro, `${copy.medicineAllergiesHeading}: ${medicines.join(", ")}.`]
+    ? [
+        spokenCopy?.medicineIntro ?? copy.medicineStaffIntro,
+        `${spokenCopy?.medicineListLabel ?? copy.medicineAllergiesHeading}: ${medicines.join(listSeparator)}`,
+      ]
     : [
-        copy.staffHeading,
-        `${copy.foodAllergies}: ${[...foods, ...conditions].join(", ")}.`,
-        sensitivities.length > 0 ? `${copy.sensitivitiesHeading}: ${sensitivities.join(", ")}.` : "",
+        spokenCopy?.foodIntro ?? copy.staffHeading,
+        `${spokenCopy?.foodListLabel ?? copy.foodAllergies}: ${[...foods, ...conditions].join(listSeparator)}`,
+        sensitivities.length > 0
+          ? `${spokenCopy?.sensitivityListLabel ?? copy.sensitivitiesHeading}: ${sensitivities.join(listSeparator)}`
+          : "",
       ]
 
   return [
     ...sectionSummary,
     emergencySummary,
-    section === "medicine" ? copy.medicineAlternativeInstruction : copy.cannotAccommodate,
-  ].filter(Boolean).join(" ")
+    section === "medicine"
+      ? (spokenCopy?.medicineAlternativeInstruction ?? copy.medicineAlternativeInstruction)
+      : (spokenCopy?.cannotAccommodate ?? copy.cannotAccommodate),
+  ].filter(Boolean).map(asSentence).join(" ")
 }

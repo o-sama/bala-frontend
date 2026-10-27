@@ -220,7 +220,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
   },
   es: {
     languageName: "Español",
-    locale: "es",
+    locale: "es-ES",
     direction: "ltr",
     allergyProfile: "Perfil de alergias",
     foodAllergies: "Alergias alimentarias",
@@ -294,7 +294,7 @@ export const translations: Record<SupportedLanguage, Copy> = {
   },
   ar: {
     languageName: "العربية",
-    locale: "ar",
+    locale: "ar-SA",
     direction: "rtl",
     allergyProfile: "ملف الحساسية",
     foodAllergies: "حساسيات الطعام",

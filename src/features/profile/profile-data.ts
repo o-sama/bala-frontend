@@ -13,6 +13,7 @@ export type AllergenFamilyId = "tree-nuts" | "legumes"
 export type SensitivityId = "lactose"
 export type MedicineAllergyId = "penicillin"
 export type DietaryConditionId = "celiac"
+export type ProfileLanguage = "en" | "fr" | "es" | "ar" | "tr"
 
 export interface Food {
   id: FoodId
@@ -34,6 +35,7 @@ export interface PublicProfile {
 export interface EmergencyInfo {
   carriesEpinephrine?: boolean
   epinephrineLocation?: string
+  epinephrineLocationTranslations?: Partial<Record<ProfileLanguage, string>>
   contactName?: string
   contactPhone?: string
   actionPlanUrl?: string
@@ -76,6 +78,13 @@ export const demoProfile: PublicProfile = {
   emergencyInfo: {
     carriesEpinephrine: true,
     epinephrineLocation: "Front pocket of backpack",
+    epinephrineLocationTranslations: {
+      en: "Front pocket of backpack",
+      fr: "Poche avant du sac à dos",
+      es: "Bolsillo delantero de la mochila",
+      ar: "الجَيْبُ الأَمَامِيُّ لِحَقِيبَةِ الظَّهْر",
+      tr: "Sırt çantasının ön cebi",
+    },
     contactName: "Jamie Morgan",
     contactPhone: "+1 416-555-0142",
     actionPlanUrl: "./alex-demo-emergency-plan.html",

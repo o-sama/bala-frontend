@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { AudioLines, Square, Type } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { getVoicesWhenReady, selectBestVoice, speechRates } from "@/features/profile/speech-synthesis"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
 interface CommunicationToolsProps {
@@ -19,28 +20,48 @@ export function CommunicationTools({
 }: CommunicationToolsProps) {
   const copy = translations[language]
   const [isSpeaking, setIsSpeaking] = useState(false)
+  const speechRequestId = useRef(0)
   const canSpeak =
     typeof window !== "undefined" &&
     "speechSynthesis" in window &&
     "SpeechSynthesisUtterance" in window
 
-  useEffect(() => () => window.speechSynthesis?.cancel(), [])
+  useEffect(() => () => {
+    speechRequestId.current += 1
+    window.speechSynthesis?.cancel()
+  }, [])
 
-  function toggleSpeech() {
+  async function toggleSpeech() {
     if (!canSpeak) return
     if (isSpeaking) {
+      speechRequestId.current += 1
       window.speechSynthesis.cancel()
       setIsSpeaking(false)
       return
     }
 
-    const utterance = new SpeechSynthesisUtterance(speechText)
-    utterance.lang = copy.locale
-    utterance.onend = () => setIsSpeaking(false)
-    utterance.onerror = () => setIsSpeaking(false)
-    window.speechSynthesis.cancel()
-    window.speechSynthesis.speak(utterance)
+    const requestId = speechRequestId.current + 1
+    speechRequestId.current = requestId
     setIsSpeaking(true)
+    window.speechSynthesis.cancel()
+
+    const voices = await getVoicesWhenReady(window.speechSynthesis)
+    if (speechRequestId.current !== requestId) return
+
+    const utterance = new SpeechSynthesisUtterance(speechText)
+    const selectedVoice = selectBestVoice(voices, copy.locale)
+    if (selectedVoice) utterance.voice = selectedVoice
+    utterance.lang = selectedVoice?.lang ?? copy.locale
+    utterance.rate = speechRates[language]
+    utterance.pitch = 1
+    utterance.volume = 1
+    utterance.onend = () => {
+      if (speechRequestId.current === requestId) setIsSpeaking(false)
+    }
+    utterance.onerror = () => {
+      if (speechRequestId.current === requestId) setIsSpeaking(false)
+    }
+    window.speechSynthesis.speak(utterance)
   }
 
   return (

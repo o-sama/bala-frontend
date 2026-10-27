@@ -95,6 +95,7 @@ export function PublicProfilePage({
       {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
 
       <CommunicationTools
+        key={language}
         language={language}
         speechText={getProfileSpeechText(profile, language, visibleSection)}
         isLargeText={isLargeText}

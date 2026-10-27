@@ -69,6 +69,7 @@ export function StaffViewPage({ profile, language, onLanguageChange, section = "
       </section>
 
       <CommunicationTools
+        key={language}
         language={language}
         speechText={getProfileSpeechText(profile, language, visibleSection)}
         isLargeText={isLargeText}
