@@ -10,7 +10,7 @@ interface LanguageSelectProps {
 
 export function LanguageSelect({ value, onChange }: LanguageSelectProps) {
   return (
-    <Select value={value} onValueChange={(next) => onChange(next as SupportedLanguage)}>
+    <Select dir={translations[value].direction} value={value} onValueChange={(next) => onChange(next as SupportedLanguage)}>
       <SelectTrigger aria-label="Language">
         <Globe2 className="size-4" />
         <SelectValue />

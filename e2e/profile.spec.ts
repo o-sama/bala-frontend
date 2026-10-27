@@ -50,6 +50,9 @@ test("Arabic large text reflows without clipped content and survives reload", as
   await page.getByRole("button", { name: "نص كبير", exact: true }).click()
   await page.reload()
   await expect(page.locator("html")).toHaveAttribute("lang", "ar")
+  await expect(page.getByRole("heading", { level: 1 })).toHaveCSS("direction", "rtl")
+  await expect(page.getByRole("tabpanel")).toHaveCSS("direction", "rtl")
+  await expect(page.getByRole("tablist")).toHaveCSS("direction", "rtl")
   await expect(page.getByRole("button", { name: "نص كبير", exact: true })).toHaveAttribute("aria-pressed", "true")
   const clipped = await page.locator("main").evaluate((main) => [...main.querySelectorAll("*")]
     .filter((element) => element.clientWidth > 0 && element.scrollWidth > element.clientWidth + 3)

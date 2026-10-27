@@ -68,6 +68,7 @@ export function PublicProfilePage({
       <div className="profile-body">
         {hasMedicineTab ? (
           <Tabs
+            dir={copy.direction}
             value={visibleSection}
             onValueChange={(value) => {
               const section = value as ProfileSection

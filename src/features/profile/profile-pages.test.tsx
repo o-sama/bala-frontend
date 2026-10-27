@@ -287,6 +287,12 @@ describe("profile priorities", () => {
     expect(ingredientCheck).toBeChecked()
   })
 
+  it("passes Arabic direction into the tab component instead of its LTR default", () => {
+    render(<PublicProfilePage profile={demoProfile} language="ar" onLanguageChange={handlers.onLanguageChange} onShowToStaff={handlers.onShowToStaff} />)
+    expect(screen.getByRole("tabpanel").closest("[dir]")).toHaveAttribute("dir", "rtl")
+    expect(screen.getByRole("tablist").closest("[dir]")).toHaveAttribute("dir", "rtl")
+  })
+
   it("renders Arabic staff copy with right-to-left direction", () => {
     render(
       <StaffViewPage
