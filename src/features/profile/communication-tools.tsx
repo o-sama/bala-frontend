@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react"
-import { AudioLines, Square, Type } from "lucide-react"
+import { AudioLines, SlidersHorizontal, Square, Type } from "lucide-react"
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { interactionCopy } from "@/features/profile/interaction-copy"
-import { getVoicesWhenReady, selectBestVoice, speechRates } from "@/features/profile/speech-synthesis"
+import { getRecommendedVoices, getVoicesWhenReady, selectBestVoice, speechRates } from "@/features/profile/speech-synthesis"
 import { translations, type SupportedLanguage } from "@/features/profile/translations"
 
 interface CommunicationToolsProps {
@@ -23,7 +24,7 @@ export function CommunicationTools({ language, speechText, isLargeText, onLargeT
   const [error, setError] = useState("")
   const speechRequestId = useRef(0)
   const canSpeak = typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window
-  const matchingVoices = voices.filter((voice) => voice.lang.replaceAll("_", "-").split("-")[0].toLowerCase() === language)
+  const matchingVoices = getRecommendedVoices(voices, copy.locale)
 
   useEffect(() => {
     if (!canSpeak) return
@@ -85,7 +86,7 @@ export function CommunicationTools({ language, speechText, isLargeText, onLargeT
   }
 
   return (
-    <section className="space-y-3 rounded-2xl border border-border bg-muted/40 p-3" aria-label={copy.communicationTools}>
+    <section className="space-y-2" aria-label={copy.communicationTools}>
       <div className="communication-toolbar">
         <Button variant="outline" className="text-sm" onClick={() => {
           if (!canSpeak) return
@@ -98,23 +99,23 @@ export function CommunicationTools({ language, speechText, isLargeText, onLargeT
         <Button variant="outline" className="text-sm" onClick={() => onLargeTextChange(!isLargeText)} aria-pressed={isLargeText}>
           <Type className="size-4" />{copy.largeText}
         </Button>
-      </div>
-      {matchingVoices.length > 1 && (
-        <details className="min-w-0 text-sm">
-          <summary className="min-h-6 cursor-pointer font-semibold">{controls.voice}</summary>
-          <label className="mt-2 grid min-w-0 gap-1 font-semibold">
-            <span className="sr-only">{controls.voice}</span>
-          <select className="min-h-11 w-full min-w-0 rounded-lg border border-border bg-background px-2" value={voiceUri} onChange={(event) => {
+        {matchingVoices.length > 1 && (
+          <Select dir={copy.direction} value={voiceUri || "automatic"} onValueChange={(value) => {
             stopSpeech()
-            setVoiceUri(event.target.value)
+            setVoiceUri(value === "automatic" ? "" : value)
             setError("")
           }}>
-            <option value="">{controls.automaticVoice}</option>
-            {matchingVoices.map((voice) => <option key={voice.voiceURI} value={voice.voiceURI}>{voice.name} ({voice.lang})</option>)}
-          </select>
-          </label>
-        </details>
-      )}
+            <SelectTrigger aria-label={controls.voice} className="h-11 max-w-full rounded-xl sm:max-w-64">
+              <SlidersHorizontal className="size-4 shrink-0" />
+              <span className="min-w-0 truncate"><SelectValue /></span>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="automatic">{controls.automaticVoice}</SelectItem>
+              {matchingVoices.map((voice) => <SelectItem key={voice.voiceURI} value={voice.voiceURI}>{voice.name} ({voice.lang})</SelectItem>)}
+            </SelectContent>
+          </Select>
+        )}
+      </div>
       {!canSpeak && <p role="status" className="text-sm text-alert">{controls.noVoice}</p>}
       {error && <p role="alert" className="text-sm font-semibold text-alert">{error}</p>}
     </section>

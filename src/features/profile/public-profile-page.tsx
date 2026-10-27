@@ -65,7 +65,7 @@ export function PublicProfilePage({
         onLargeTextChange={setIsLargeText}
       />
 
-      <div className="profile-body">
+      <div>
         {hasMedicineTab ? (
           <Tabs
             dir={copy.direction}
@@ -95,14 +95,15 @@ export function PublicProfilePage({
               <FoodProfileContent profile={profile} language={language} showEyebrow={false} />
             </TabsContent>
             <TabsContent value="medicine">
-              <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} details={profile.medicineAllergyDetails} />
+              <div className="profile-body">
+                <MedicineAllergySection medicineAllergies={medicineAllergies} language={language} details={profile.medicineAllergyDetails} />
+                {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
+              </div>
             </TabsContent>
           </Tabs>
         ) : (
           <FoodProfileContent profile={profile} language={language} showEyebrow />
         )}
-
-        {profile.emergencyInfo && <EmergencyInfoSection emergencyInfo={profile.emergencyInfo} language={language} />}
       </div>
 
       <div className="sticky bottom-3 z-20 rounded-2xl bg-background/90 p-1.5 shadow-xl backdrop-blur">

@@ -45,7 +45,7 @@ describe("profile priorities", () => {
     }
     expect(screen.getByRole("link", { name: "Bala home" })).toHaveAttribute("href", "#/p/talia")
     expect(screen.queryByRole("heading", { name: "Sensitivities (not allergies)" })).not.toBeInTheDocument()
-    expect(screen.queryByRole("tab", { name: "Medicine allergies" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("tab", { name: "Medicinal allergies" })).not.toBeInTheDocument()
   })
 
   it("shows Alex's medicine allergies in a separate tab", async () => {
@@ -60,14 +60,14 @@ describe("profile priorities", () => {
     )
 
     expect(screen.getByRole("tab", { name: "Food allergies" })).toHaveAttribute("aria-selected", "true")
-    expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("tab", { name: "Medicinal allergies" })).toHaveAttribute("aria-selected", "false")
     expect(screen.getByText("Legume allergies")).toBeInTheDocument()
     expect(screen.getByText("Soy")).toBeInTheDocument()
     expect(screen.queryByText("Penicillin")).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
+    await user.click(screen.getByRole("tab", { name: "Medicinal allergies" }))
 
-    expect(screen.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("tab", { name: "Medicinal allergies" })).toHaveAttribute("aria-selected", "true")
     expect(screen.getByText("Penicillin")).toBeInTheDocument()
     expect(screen.getByText("These medicine allergies are separate from food allergies.")).toBeInTheDocument()
     expect(screen.getByText("Penicillin antibiotics")).toBeInTheDocument()
@@ -90,7 +90,7 @@ describe("profile priorities", () => {
       />,
     )
 
-    await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
+    await user.click(screen.getByRole("tab", { name: "Medicinal allergies" }))
     await user.click(screen.getByRole("button", { name: "Show to staff" }))
 
     expect(onShowToStaff).toHaveBeenCalledWith("medicine")
@@ -101,7 +101,7 @@ describe("profile priorities", () => {
     const { unmount } = render(
       <PublicProfilePage profile={demoProfile} language="en" onLanguageChange={handlers.onLanguageChange} onShowToStaff={handlers.onShowToStaff} />,
     )
-    await user.click(screen.getByRole("tab", { name: "Medicine allergies" }))
+    await user.click(screen.getByRole("tab", { name: "Medicinal allergies" }))
     expect(screen.getByText("Recorded reaction")).toBeInTheDocument()
     expect(screen.getByText("Hives and itching")).toBeInTheDocument()
     unmount()
@@ -242,7 +242,7 @@ describe("profile priorities", () => {
 
     expect(screen.getByRole("heading", { name: "Allergies — strict avoidance" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Celiac disease — strict gluten-free" })).toBeInTheDocument()
-    expect(screen.queryByRole("heading", { name: "Medicine allergy — do not administer" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Medicinal allergy — do not administer" })).not.toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Sensitivities — avoid if possible" })).toBeInTheDocument()
     expect(screen.getByText("Avoid ingredients and cross-contact")).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Safe preparation checklist" })).toBeInTheDocument()
@@ -260,7 +260,7 @@ describe("profile priorities", () => {
     )
 
     expect(screen.getByText("Please show medical personnel")).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Medicinal allergy — do not administer" })).toBeInTheDocument()
     expect(screen.queryByRole("heading", { name: "Allergies — strict avoidance" })).not.toBeInTheDocument()
     expect(screen.queryByRole("heading", { name: "Celiac disease — strict gluten-free" })).not.toBeInTheDocument()
     expect(screen.queryByRole("heading", { name: "Safe preparation checklist" })).not.toBeInTheDocument()

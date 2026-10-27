@@ -31,15 +31,15 @@ test("keeps the demo fallback and hides owner setup", async ({ page }) => {
 test("preserves the selected section and large text in staff mode", async ({ page }) => {
   await page.goto("/#/p/alex-demo")
   await page.getByRole("button", { name: "Large text", exact: true }).click()
-  await page.getByRole("tab", { name: "Medicine allergies" }).click()
+  await page.getByRole("tab", { name: "Medicinal allergies" }).click()
   await expect(page.getByText("Hives and itching")).toBeVisible()
   await page.getByRole("button", { name: "Show to staff" }).click()
   await expect(page).toHaveURL(/staff\/medicine$/)
-  await expect(page.getByRole("heading", { name: "Medicine allergy — do not administer" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Medicinal allergy — do not administer" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Safe preparation checklist" })).toHaveCount(0)
   await expect(page.getByRole("button", { name: "Large text", exact: true })).toHaveAttribute("aria-pressed", "true")
   await page.getByRole("button", { name: "Back", exact: true }).click()
-  await expect(page.getByRole("tab", { name: "Medicine allergies" })).toHaveAttribute("aria-selected", "true")
+  await expect(page.getByRole("tab", { name: "Medicinal allergies" })).toHaveAttribute("aria-selected", "true")
 })
 
 test("Arabic large text reflows without clipped content and survives reload", async ({ page }) => {
@@ -77,7 +77,7 @@ test("tab changes cancel old speech and read only the selected profile section",
   await page.goto("/#/p/alex-demo")
   await page.getByRole("button", { name: "Read aloud", exact: true }).click()
   await expect(page.getByRole("button", { name: "Stop reading", exact: true })).toBeVisible()
-  await page.getByRole("tab", { name: "Medicine allergies" }).click()
+  await page.getByRole("tab", { name: "Medicinal allergies" }).click()
   await expect(page.getByRole("button", { name: "Read aloud", exact: true })).toBeVisible()
   await page.getByRole("button", { name: "Read aloud", exact: true }).click()
   const speech = await page.evaluate(() => (window as unknown as { __balaSpeech: { spoken: string[]; cancellations: number } }).__balaSpeech)
@@ -85,4 +85,20 @@ test("tab changes cancel old speech and read only the selected profile section",
   expect(speech.spoken[0]).toContain("Avoid wheat, barley, rye")
   expect(speech.spoken[1]).toContain("Recorded reaction: Hives and itching")
   expect(speech.spoken[1]).not.toContain("Walnuts")
+})
+
+
+test("emergency card aligns with the first content card on wide screens", async ({ page }) => {
+  await page.goto("/#/p/alex-demo")
+  const firstAllergy = page.getByRole("group", { name: "Food allergies", exact: true }).locator(":scope > div").first()
+  const emergency = page.locator(".profile-body > section[aria-labelledby='emergency-heading']")
+  const allergyBox = await firstAllergy.boundingBox()
+  const emergencyBox = await emergency.boundingBox()
+  if (page.viewportSize()!.width >= 900) expect(Math.abs(allergyBox!.y - emergencyBox!.y)).toBeLessThan(2)
+  else expect(emergencyBox!.y).toBeGreaterThan(allergyBox!.y)
+  await page.getByRole("tab", { name: "Medicinal allergies" }).click()
+  const medicineBox = await page.locator(".profile-body > div").boundingBox()
+  const medicineEmergencyBox = await emergency.boundingBox()
+  if (page.viewportSize()!.width >= 900) expect(Math.abs(medicineBox!.y - medicineEmergencyBox!.y)).toBeLessThan(2)
+  else expect(medicineEmergencyBox!.y).toBeGreaterThan(medicineBox!.y)
 })
